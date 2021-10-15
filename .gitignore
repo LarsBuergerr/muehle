@@ -2,3 +2,6 @@
 *.log
 .vscode/
 .metals/
+project/
+.bsp/
+target/
