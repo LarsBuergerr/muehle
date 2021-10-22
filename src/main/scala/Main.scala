@@ -4,7 +4,7 @@ object demo{
   
   println("--------------------------------------------------\n")
 
-  println("Player 1                                  Player 2\n")
+  println("Player 1----------------------------------Player 2\n")
 
   println("""
   #+++++++++++++++++++++#+++++++++++++++++++++#
@@ -29,7 +29,7 @@ object demo{
   """)
 }
 
-object demo {
+/*object demo {
   @main def test: Unit =
     println("Hello world!")
 
@@ -60,4 +60,4 @@ this is very funny to programm :)
 """
     printf(strtest)
     printf("bin drinn")
-}
+}*/
