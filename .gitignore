@@ -4,5 +4,5 @@
 .metals/
 project/
 .bsp/
-.bloop/
 target/
+.bloop/
