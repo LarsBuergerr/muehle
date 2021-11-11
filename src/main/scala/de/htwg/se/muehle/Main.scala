@@ -1,37 +1,41 @@
-package main.scala.de.htwg.se.muehle
+package de.htwg.se.muehle
 
 import scala.io.StdIn.readLine
 import scala.annotation.meta.field
-
-
+import model.MuehlMatrix
+import model.Piece
+import model.Piece._
+import model.Field._
+import model.Field
+import controller.Controller
+import aview.TUI
 @main def Muehle: Unit =
 
-    import model.MuehlMatrix
-    import model.Piece
-    import model.Piece._
-    import model.Field._
-    import model.put
-
-    print("Welcome to the muehle-game, please insert your desired field size [standart = 3]: ");
-    var line = readLine()
-    println()
-    var size = line.toInt
+    print("Welcome to the muehle-game, please insert your desired field size [standart = 3]: \n");
+    val input = readLine
+    var size = input.toInt
     var matr = new MuehlMatrix[Option[Piece]](size, None)
-    val field = put(size * 4, size, 3, matr)
-    print(field)
-//    val width = 12
-//    val space = 3
-//    val size = 3
-//    val depth = size * 2
-//    
-//    var matr = new MuehlMatrix[Option[Piece]](size, None)
+    val field = new Field(size, matr)
+    val controller = Controller(field)
+    val tui = TUI(controller)
+    tui.run
+//    field.mesh()
+//    getInputAndPrintLoop(field)
 //
-//    val str = update(12, 3, 3, matr)
-//
-//    print(str)
-//
-//    matr = matr.replace(0, 1, Some(player1))
-//
-//    val tmp = update(12, 3, 3, matr)
-//
-//    print(tmp)
+//def getInputAndPrintLoop(field: Field): Unit = 
+//    val input = readLine
+//    input match
+//        case "quit" =>
+//        case _ => {
+//            val chars = input.toCharArray
+//            val stone = chars(0) match
+//                case 'W' => Piece.player1
+//                case 'w' => Piece.player1
+//                case 'B' => Piece.player2
+//                case 'b' => Piece.player2
+//            val x = chars(1).toString.toInt
+//            val y = chars(2).toString.toInt
+//            val newfield = field.put(Some(stone), x, y)
+//            newfield.mesh()
+//            getInputAndPrintLoop(newfield)
+//        }
