@@ -1,0 +1,8 @@
+#Successful Tests
+#Thu Nov 18 17:26:19 CET 2021
+de.htwg.se.muehle.controller.ControllerSpec=1637252779612
+de.htwg.se.muehle.aview.de.htwg.se.muehle.util.TUISpec=1637252779534
+de.htwg.se.muehle.util.ObserverSpec=1637252779616
+de.htwg.se.muehle.model.FieldSpec=1637252779648
+de.htwg.se.muehle.model.PieceSpec=1637252779617
+de.htwg.se.muehle.model.MuehlMatrixSpec=1637252779623

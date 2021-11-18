@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="de"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Field.scala</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=2;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Jacoco Coverage Report</a> &gt; <a href="index.source.html" class="el_package">de.htwg.se.muehle.model</a> &gt; <span class="el_source">Field.scala</span></div><h1>Field.scala</h1><pre class="source lang-java linenums">package de.htwg.se.muehle
+package model
+
+<span class="pc bnc" id="L4" title="All 24 branches missed.">case class Field(size: Int, matr: MuehlMatrix[Option[Piece]]):</span>
+
+<span class="pc" id="L6">    val corner = &quot;#&quot;</span>
+<span class="fc" id="L7">    val top = &quot;-&quot;</span>
+<span class="fc" id="L8">    val side = &quot;|&quot;</span>
+<span class="fc" id="L9">    val eol = sys.props(&quot;line.separator&quot;)</span>
+    import Piece._
+
+    def line(width: Int, depth: Int, pieces: Vector[Option[Piece]]): String = {
+<span class="fc" id="L13">        (pieces.take(depth - 1).map(p =&gt; p.getOrElse(&quot;#&quot;).toString + top * width)).mkString + pieces.last.getOrElse(&quot;#&quot;).toString</span>
+    }
+    def lineWLine(width: Int, space: Int, depth: Int, pieces: Vector[Option[Piece]]): String = {
+<span class="fc" id="L16">        line(width, depth, pieces.take(pieces.size / 2)) + &quot; &quot; * space + line(width, depth, pieces.takeRight(pieces.size / 2))</span>
+    }
+    def wallWBar(width: Int, space: Int, depth: Int): String = {
+<span class="fc bfc" id="L19" title="All 2 branches covered.">        if depth == 0 then</span>
+<span class="fc" id="L20">            side + &quot; &quot; * width + side + &quot; &quot; * width + side</span>
+        else
+<span class="fc" id="L22">            side + &quot; &quot; * space + wallWBar(width, space, depth - 1) + &quot; &quot; * space + side</span>
+    }
+    def wallWWall(width: Int, space: Int, depth: Int): String = {
+<span class="fc bfc" id="L25" title="All 2 branches covered.">        if depth == 1 then</span>
+<span class="fc" id="L26">            side + &quot; &quot; * width + side</span>
+        else
+<span class="fc" id="L28">            side + &quot; &quot; * space + wallWWall(width, space, depth - 1) + &quot; &quot; * space + side</span>
+    }
+    def wallWLine(width: Int, space: Int, depth: Int, pieces: Vector[Option[Piece]]): String = {
+<span class="fc bfc" id="L31" title="All 2 branches covered.">        if depth == 0 then</span>
+<span class="fc" id="L32">            line(width, 3, pieces)</span>
+        else
+<span class="fc" id="L34">            side + &quot; &quot; * space + wallWLine(width, space, depth - 1, pieces) + &quot; &quot; * space + side</span>
+    }
+
+    def mesh(): String= {
+<span class="fc" id="L38">        var width = size * 4</span>
+<span class="fc" id="L39">        var space = 3</span>
+<span class="fc" id="L40">        var str = line(width, 3, matr.rows(0)) + eol</span>
+<span class="fc" id="L41">        for (i &lt;- 1 to size) {</span>
+            if i &lt; size then
+                str = str + wallWBar(width - ((i - 1) * (space + 1)), space, i - 1) + eol
+                str = str + wallWLine(width - (i * (space + 1)), space, i, matr.rows(i)) + eol
+            else
+                str = str + wallWWall((width - ((size - 1) * (space + 1))) * 2 + 1, space, size) + eol
+                str = str + lineWLine(space, (width - (size - 1) * (space + 1)) * 2 + 1, size, matr.middle) + eol
+<span class="fc" id="L48">        }</span>
+<span class="fc" id="L49">        var j = size</span>
+<span class="fc" id="L50">        var n = (matr.size / 2) - 1</span>
+<span class="fc bfc" id="L51" title="All 2 branches covered.">        while (j &gt; 0) {</span>
+<span class="fc bfc" id="L52" title="All 2 branches covered.">            if j &lt; size then</span>
+<span class="fc" id="L53">                str = str + wallWLine(width - (j * (space + 1)), space, j, matr.rows(n)) + eol</span>
+<span class="fc" id="L54">                str = str + wallWBar(width - ((j - 1) * (space + 1)), space, j - 1) + eol</span>
+            else
+<span class="fc" id="L56">                str = str + wallWWall((width - ((size - 1) * (space + 1))) * 2 + 1, space, size) + eol</span>
+<span class="fc" id="L57">            j = j - 1</span>
+<span class="fc" id="L58">            n = n + 1</span>
+        }
+<span class="fc" id="L60">        str = str + line(width, 3, matr.rows(matr.size - 1)) + eol</span>
+<span class="fc" id="L61">        return str</span>
+    }
+
+    def put(stone: Option[Piece], x: Int, y: Int) = {
+<span class="fc bfc" id="L65" title="All 2 branches covered.">        if ((matr.size / 2) == x) {</span>
+<span class="fc" id="L66">            copy(size, matr.replaceMid(y, stone))</span>
+        } else {
+<span class="fc bfc" id="L68" title="All 2 branches covered.">            if((matr.size / 2) &lt; x) {</span>
+<span class="fc" id="L69">                copy(size, matr.replace(x - 1, y, stone))</span>
+            } else {
+<span class="fc" id="L71">                copy(size, matr.replace(x, y, stone))</span>
+            }
+        } 
+<span class="fc" id="L74">    }</span>
+
+//    def move(x: Int, y: Int) = {
+//
+//    }
+//
+//    def take(x: Int, y: Int) = {
+//        if ((matr.size / 2) == x) {
+//            copy(size, matr.replaceMid(y, None))
+//        } else {
+//            if((matr.size / 2) &lt; x) {
+//                copy(size, matr.replace(x - 1, y, None))
+//            } else {
+//                copy(size, matr.replace(x, y, None))
+//            }
+//        } 
+//    }
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

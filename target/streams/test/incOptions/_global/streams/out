@@ -1,0 +1,29 @@
+[0m[[0m[0mdebug[0m] [0m[0mCreated transactional ClassFileManager with tempDir = C:\AIN-3\Software Engineering\SE-Project\target\scala-3.0.2\test-classes.bak[0m
+[0m[[0m[0mdebug[0m] [0m[0mAbout to delete class files:[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ObserverSpec.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ObserverSpec$ObserverTester.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ObserverSpec$ObservableTester.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	PieceSpec.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ObserverSpec.tasty[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ObserverSpec$ObserverTester.tasty[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ObserverSpec$ObservableTester.tasty[0m
+[0m[[0m[0mdebug[0m] [0m[0m	PieceSpec.tasty[0m
+[0m[[0m[0mdebug[0m] [0m[0mWe backup class files:[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ObserverSpec.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ObserverSpec$ObserverTester.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ObserverSpec$ObservableTester.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	PieceSpec.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ObserverSpec.tasty[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ObserverSpec$ObserverTester.tasty[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ObserverSpec$ObservableTester.tasty[0m
+[0m[[0m[0mdebug[0m] [0m[0m	PieceSpec.tasty[0m
+[0m[[0m[0mdebug[0m] [0m[0mRegistering generated classes:[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ObserverSpec.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ObserverSpec$observertester.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ObserverSpec$observabletester.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	PieceSpec.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ObserverSpec.tasty[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ObserverSpec$observertester.tasty[0m
+[0m[[0m[0mdebug[0m] [0m[0m	ObserverSpec$observabletester.tasty[0m
+[0m[[0m[0mdebug[0m] [0m[0m	PieceSpec.tasty[0m
+[0m[[0m[0mdebug[0m] [0m[0mRemoving the temporary directory used for backing up class files: C:\AIN-3\Software Engineering\SE-Project\target\scala-3.0.2\test-classes.bak[0m
