@@ -1,7 +1,7 @@
 package de.htwg.se.muehle
 package model
 
-case class Field(size: Int, matr: MuehlMatrix[Option[Piece]]) {
+case class Field(size: Int, matr: MuehlMatrix[Option[Piece]]):
 
     val corner = "#"
     val top = "-"
@@ -72,4 +72,20 @@ case class Field(size: Int, matr: MuehlMatrix[Option[Piece]]) {
             }
         } 
     }
-}
+
+    def move(x: Int, y: Int) = {
+
+    }
+
+    def take(x: Int, y: Int) = {
+        if ((matr.size / 2) == x) {
+            copy(size, matr.replaceMid(y, None))
+        } else {
+            if((matr.size / 2) < x) {
+                copy(size, matr.replace(x - 1, y, None))
+            } else {
+                copy(size, matr.replace(x, y, None))
+            }
+        } 
+    }
+

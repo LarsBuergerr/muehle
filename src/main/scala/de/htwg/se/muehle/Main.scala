@@ -19,23 +19,4 @@ import aview.TUI
     val controller = Controller(field)
     val tui = TUI(controller)
     tui.run
-//    field.mesh()
-//    getInputAndPrintLoop(field)
-//
-//def getInputAndPrintLoop(field: Field): Unit = 
-//    val input = readLine
-//    input match
-//        case "quit" =>
-//        case _ => {
-//            val chars = input.toCharArray
-//            val stone = chars(0) match
-//                case 'W' => Piece.player1
-//                case 'w' => Piece.player1
-//                case 'B' => Piece.player2
-//                case 'b' => Piece.player2
-//            val x = chars(1).toString.toInt
-//            val y = chars(2).toString.toInt
-//            val newfield = field.put(Some(stone), x, y)
-//            newfield.mesh()
-//            getInputAndPrintLoop(newfield)
-//        }
+

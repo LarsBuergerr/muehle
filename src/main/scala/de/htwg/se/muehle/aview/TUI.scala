@@ -18,6 +18,11 @@ class TUI(controller: Controller) extends Observer:
         val input = readLine
         input match
             case "quit" =>
+            //case "take" => {
+            //    val str = input.toCharArray
+            //    val s = str(0) match
+            //    
+            //}
             case _ => {
                 val chars = input.toCharArray
                 val stone = chars(0) match
