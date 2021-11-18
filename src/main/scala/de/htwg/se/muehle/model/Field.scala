@@ -34,7 +34,7 @@ case class Field(size: Int, matr: MuehlMatrix[Option[Piece]]):
             side + " " * space + wallWLine(width, space, depth - 1, pieces) + " " * space + side
     }
 
-    def mesh() = {
+    def mesh(): String= {
         var width = size * 4
         var space = 3
         var str = line(width, 3, matr.rows(0)) + eol
@@ -58,7 +58,7 @@ case class Field(size: Int, matr: MuehlMatrix[Option[Piece]]):
             n = n + 1
         }
         str = str + line(width, 3, matr.rows(matr.size - 1)) + eol
-        print(str)
+        return str
     }
 
     def put(stone: Option[Piece], x: Int, y: Int) = {
@@ -73,19 +73,19 @@ case class Field(size: Int, matr: MuehlMatrix[Option[Piece]]):
         } 
     }
 
-    def move(x: Int, y: Int) = {
-
-    }
-
-    def take(x: Int, y: Int) = {
-        if ((matr.size / 2) == x) {
-            copy(size, matr.replaceMid(y, None))
-        } else {
-            if((matr.size / 2) < x) {
-                copy(size, matr.replace(x - 1, y, None))
-            } else {
-                copy(size, matr.replace(x, y, None))
-            }
-        } 
-    }
+//    def move(x: Int, y: Int) = {
+//
+//    }
+//
+//    def take(x: Int, y: Int) = {
+//        if ((matr.size / 2) == x) {
+//            copy(size, matr.replaceMid(y, None))
+//        } else {
+//            if((matr.size / 2) < x) {
+//                copy(size, matr.replace(x - 1, y, None))
+//            } else {
+//                copy(size, matr.replace(x, y, None))
+//            }
+//        } 
+//    }
 

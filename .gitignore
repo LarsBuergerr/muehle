@@ -3,6 +3,6 @@
 .vscode/
 .metals/
 .bsp/
-target/
 .bloop/
 project/
+target/ 

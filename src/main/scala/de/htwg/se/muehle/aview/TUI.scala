@@ -9,10 +9,10 @@ import util.Observer
 class TUI(controller: Controller) extends Observer:
     controller.add(this)
     def run =
-        controller.field.mesh()
+        print(controller.field.mesh())
         getInputAndPrintLoop()
 
-    override def update = controller.field.mesh()
+    override def update = print(controller.field.mesh())
 
     def getInputAndPrintLoop(): Unit =
         val input = readLine
