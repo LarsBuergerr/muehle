@@ -4,4 +4,4 @@
 .metals/
 .bsp/
 .bloop/
-project/
+target/
