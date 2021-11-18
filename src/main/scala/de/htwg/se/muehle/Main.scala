@@ -13,8 +13,8 @@ import aview.TUI
 
     print("Welcome to the muehle-game, please insert your desired field size [standart = 3]: \n");
     val input = readLine
-    var size = input.toInt
-    var matr = new MuehlMatrix[Option[Piece]](size, None)
+    val size = input.toInt
+    val matr = new MuehlMatrix[Option[Piece]](size, None)
     val field = new Field(size, matr)
     val controller = Controller(field)
     val tui = TUI(controller)

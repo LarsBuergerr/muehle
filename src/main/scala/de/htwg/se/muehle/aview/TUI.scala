@@ -5,12 +5,16 @@ import controller.Controller
 import model.Piece
 import scala.io.StdIn.readLine
 import util.Observer
+import model.Field
+import model.MuehlMatrix
 
 class TUI(controller: Controller) extends Observer:
     controller.add(this)
     def run =
         print(controller.field.mesh())
         getInputAndPrintLoop()
+
+    def this() = this(new Controller(new Field(3, new MuehlMatrix(3, None))))
 
     override def update = print(controller.field.mesh())
 
