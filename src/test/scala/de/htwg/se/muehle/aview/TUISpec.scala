@@ -15,7 +15,7 @@ class TUISpec extends AnyWordSpec {
     "A tui" should {
         "contain a controller with a field and should be able to read input" in {
             val matr = new MuehlMatrix[Option[Piece]](3, None)
-            val field = new Field(3, matr)
+            val field = new Field(18, 3, matr)
             val controller = new Controller(field)
             val tui = new TUI
         }

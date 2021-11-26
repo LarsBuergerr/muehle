@@ -1,12 +1,25 @@
 package de.htwg.se.muehle
 package model
 
-case class Field(size: Int, matr: MuehlMatrix[Option[Piece]]):
+import scala.annotation.switch
+
+
+case class Field(status: Int, size: Int, matr: MuehlMatrix[Option[Piece]]):
 
     val corner = "#"
     val top = "-"
     val side = "|"
-    val eol = sys.props("line.separator")
+    val eol = sys.props("line.separator") 
+    val playerstatus = 
+        if(status % 2 == 0) then
+            0
+        else
+            1
+    val gamestatus =
+        if(status > 0) then
+            0
+        else
+            1
     import Piece._
 
     def line(width: Int, depth: Int, pieces: Vector[Option[Piece]]): String = {
@@ -62,30 +75,55 @@ case class Field(size: Int, matr: MuehlMatrix[Option[Piece]]):
     }
 
     def put(stone: Option[Piece], x: Int, y: Int) = {
-        if ((matr.size / 2) == x) {
-            copy(size, matr.replaceMid(y, stone))
-        } else {
-            if((matr.size / 2) < x) {
-                copy(size, matr.replace(x - 1, y, stone))
+        if(gamestatus == 0) {
+            val newstatus = status - 1
+            if ((matr.size / 2) == x) {
+                copy(newstatus, size, matr.replaceMid(y, stone))
             } else {
-                copy(size, matr.replace(x, y, stone))
+                if((matr.size / 2) < x) {
+                    copy(newstatus, size, matr.replace(x - 1, y, stone))
+                } else {
+                    copy(newstatus, size, matr.replace(x, y, stone))
+                }
             }
-        } 
+        } else if(gamestatus == 1) {
+            println("Only move Stones")
+            this
+        } else {
+            println("take one Stone")
+            this
+        }
     }
 
-//    def move(x: Int, y: Int) = {
-//
-//    }
-//
-//    def take(x: Int, y: Int) = {
-//        if ((matr.size / 2) == x) {
-//            copy(size, matr.replaceMid(y, None))
-//        } else {
-//            if((matr.size / 2) < x) {
-//                copy(size, matr.replace(x - 1, y, None))
-//            } else {
-//                copy(size, matr.replace(x, y, None))
-//            }
-//        } 
-//    }
+    def move(stone: Option[Piece], x: Int, y: Int) = {
+        if(gamestatus == 1) {
+            if ((matr.size / 2) == x) {
+                copy(status, size, matr.replaceMid(y, stone))
+            } else {
+                if((matr.size / 2) < x) {
+                    copy(status, size, matr.replace(x - 1, y, stone))
+                } else {
+                    copy(status, size, matr.replace(x, y, stone))
+                }
+            } 
+        } else if(gamestatus == 0) {
+            println("Only place stones")
+            this
+        } else {
+            println("take one Stone")
+            this
+        }
+    }
+
+    //def take(x: Int, y: Int) = {
+    //    if ((matr.size / 2) == x) {
+    //        copy(status, size, matr.replaceMid(y, None))
+    //    } else {
+    //        if((matr.size / 2) < x) {
+    //            copy(status, size, matr.replace(x - 1, y, None))
+    //        } else {
+    //            copy(status, size, matr.replace(x, y, None))
+    //        }
+    //    } 
+    //}
 

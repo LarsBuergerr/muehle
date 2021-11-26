@@ -14,7 +14,7 @@ class FieldSpec extends AnyWordSpec {
         "contain a line(width: Int, depth: Int, pieces: Vector[Option[Piece]]) which" should {
             "produce a String containing - and #, W or B depending on parameters width and depth" in {
                 val matr = new MuehlMatrix[Option[Piece]](3, None)
-                val field = new Field(3, matr)
+                val field = new Field(18, 3, matr)
                 field.line(2, 2, Vector(None, None)) should be ("#--#")
                 field.line(3, 3, Vector(Some(player1), Some(player2), Some(player2))) should be ("W---B---B")
                 field.line(4, 4, Vector(None, None, Some(player1), None)) should be ("#----#----W----#")
@@ -27,7 +27,7 @@ class FieldSpec extends AnyWordSpec {
         "contain a lineWLine(width: Int, space: Int, depth: Int, pieces: Vector[Option[Piece]]) which" should {
             "produce a String containing 2 lines with parameters width, space and depth" in {
                 val matr = new MuehlMatrix[Option[Piece]](3, None)
-                val field = new Field(3, matr)
+                val field = new Field(18, 3, matr)
                 field.lineWLine(2,2,2, Vector(None, None, None, None)) should be ("#--#  #--#")
                 field.lineWLine(4,1,3, Vector(Some(player1), Some(player2),Some(player1), Some(player2),Some(player1), Some(player2))) should be
                     ("W----B----W B----W----B")
@@ -40,7 +40,7 @@ class FieldSpec extends AnyWordSpec {
         "contain a wallWBar(width: Int, space: Int, depth: Int) which" should {
             "produce a String containing | and spaces with parameters width, space, and depth" in {
                 val matr = new MuehlMatrix[Option[Piece]](3, None)
-                val field = new Field(3, matr)
+                val field = new Field(18, 3, matr)
                 field.wallWBar(1,2,1) should be ("|  | | |  |")
                 field.wallWBar(3,3,3) should be ("|   |   |   |   |   |   |   |   |")
                 field.wallWBar(10, 10, 0) should be ("|          |          |")
@@ -50,7 +50,7 @@ class FieldSpec extends AnyWordSpec {
         "contain a wallWWall(width: Int, space: Int, depth: Int) which" should {
             "produce a String containing | and spaces with parameters, width, space and depth" in {
                 val matr = new MuehlMatrix[Option[Piece]](3, None)
-                val field = new Field(3, matr)
+                val field = new Field(18, 3, matr)
                 field.wallWWall(2,2,2) should be ("|  |  |  |")
                 field.wallWWall(2,2,1) should be ("|  |")
                 field.wallWWall(5,5,1) should be ("|     |")
@@ -60,7 +60,7 @@ class FieldSpec extends AnyWordSpec {
         "contain a wallWLine(width: Int, space: Int, depth: Int, pieces: Vector[Option[Piece]]) which" should {
             "produce a String containing |, -, (#, b or w) and spaces with parameters width, space and depth" in {
                 val matr = new MuehlMatrix[Option[Piece]](3, None)
-                val field = new Field(3, matr)
+                val field = new Field(18, 3, matr)
                 field.wallWLine(1,1,1, Vector(None, None,None)) should be ("| #-#-# |")
                 field.wallWLine(2,2,2, Vector(None, None,None)) should be ("|  |  #--#--#  |  |")
                 field.wallWLine(3,5,0, Vector(None, None,None)) should be ("#---#---#")
@@ -70,7 +70,7 @@ class FieldSpec extends AnyWordSpec {
         "contain a mesh() method which" should {
             "return a String looking like a muehle-field which size is depending on the size parameter" in {
                 val matr = new MuehlMatrix[Option[Piece]](3, None)
-                val field = new Field(3, matr)
+                val field = new Field(18, 3, matr)
                 field.mesh() should be 
             ("""#------------#------------#
                 |            |            |
@@ -86,7 +86,7 @@ class FieldSpec extends AnyWordSpec {
                 |            |            |
                 #------------#------------#""")
                 val matr2 = new MuehlMatrix[Option[Piece]](6, None)
-                val field2 = new Field(6, matr2)
+                val field2 = new Field(18, 3, matr)
                 field2.mesh() should be
             ("""#------------------------#------------------------#
                 |                        |                        |
@@ -118,7 +118,7 @@ class FieldSpec extends AnyWordSpec {
         "contain a put(stone: Option[Piece],x: Int, y: Int) which" should {
             "change the Entries in the given matrix by changing '#' to either 'B' or 'W' on the given Coordinates" in {
                 val matr = new MuehlMatrix[Option[Piece]](3, None)
-                val field = new Field(3, matr)
+                val field = new Field(18, 3, matr)
                 val updated1 = field.put(Some(player1), 1, 1)
                 val updated2 = updated1.put(Some(player2), 3, 1)
                 val updated3 = updated2.put(Some(player1), 6, 1)
