@@ -10,11 +10,11 @@ trait Player {
 }
 
 private class Player1 extends Player {
-    override def show: Unit = printf("player1: %s\n", name)
+    override def show: Unit = printf("Player 1: %s\n", name)
 }
 
 private class Player2 extends Player {
-    override def show: Unit = printf("player2: %s\n", name)
+    override def show: Unit = printf("Player 2: %s\n", name)
 }
 
 object Player {
@@ -23,7 +23,3 @@ object Player {
         case "player2" => new Player2()
     }
 }
-
-
-
-val p1 = Player("player1")

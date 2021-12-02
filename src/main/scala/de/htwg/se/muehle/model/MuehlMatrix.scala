@@ -12,6 +12,11 @@ case class MuehlMatrix[T](rows: Vector[Vector[T]], middle: Vector[T]):
 
     def fill(filling: T): MuehlMatrix[T] = copy((Vector.tabulate(size, 3) { (row, col) => filling}), Vector.fill(size)(filling))
 
-    def replace(row: Int, col: Int, fill: T): MuehlMatrix[T] = copy(rows.updated(row, rows(row).updated(col, fill)))
+    def replace(row: Int, col: Int, fill: T): MuehlMatrix[T] =
+        if((size / 2) < row) then
+            copy(rows.updated(row - 1, rows(row - 1).updated(col, fill)))
+        else
+            copy(rows.updated(row, rows(row).updated(col, fill)))
+
 
     def replaceMid(col: Int, fill: T): MuehlMatrix[T] = copy(rows, middle.updated(col, fill))

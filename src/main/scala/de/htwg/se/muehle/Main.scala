@@ -15,7 +15,7 @@ import aview.TUI
     val input = readLine
     val size = input.toInt
     val matr = new MuehlMatrix[Option[Piece]](size, None)
-    val field = new Field(18, size, matr)
+    val field = new Field(2, size, matr)
     val controller = Controller(field)
     val tui = TUI(controller)
     tui.run

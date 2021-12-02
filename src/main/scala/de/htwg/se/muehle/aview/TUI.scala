@@ -8,6 +8,7 @@ import util.Observer
 import model.Field
 import model.MuehlMatrix
 import model.Player
+import scala.annotation.meta.field
 
 class TUI(controller: Controller) extends Observer:
     println("Insert Player Names: ")
@@ -22,30 +23,12 @@ class TUI(controller: Controller) extends Observer:
 
     override def update = print(controller.field.mesh())
 
-    //def getInputAndPrintLoop(): Unit =
-
-    //    val input = readLine
-    //    input match
-    //        case "quit" =>
-    //        //case "take" => {
-    //        //    val str = input.toCharArray
-    //        //    val s = str(0) match
-    //        //    
-    //        //}
-    //        case _ => {
-    //            val chars = input.toCharArray
-    //            val x = chars(0).toString.toInt - 1
-    //            val y = chars(1).toString.toInt - 1
-    //            controller.put(x, y)
-    //            getInputAndPrintLoop()
-    //        }
-    
     def loop: Unit =
-        if(controller.field.playerstatus == 0) {
+        if(controller.field.playerstatus.equals(Piece.player1)) then
             p1.show
-        } else {
+        else if(controller.field.playerstatus.equals(Piece.player2)) 
             p2.show
-        }
+        
         val input = readLine("> ")
         inputloop(input) match {
             case 1 =>
@@ -54,7 +37,12 @@ class TUI(controller: Controller) extends Observer:
             case 0 =>
                 print("Exiting...\n")
             case -1 =>
-                print("Wrong input! Try again\n")
+                println("Wrong input!\n" +
+                    "Supported Operations:\n\n" +
+                    "placing a stone:\tput <x> <y>\n" +
+                    "moving a stone:\t\tmove <x> <y> <new x> <new y>\n" +
+                    "taking a stone:\t\ttake <x> <y>\n" +
+                    "Exit:\t\t\t<quit> or <q>\n")
                 loop
             case _ =>
                 print("Not supported yet\n")
@@ -64,17 +52,39 @@ class TUI(controller: Controller) extends Observer:
         def inputloop(in: String): Int = {
             val chars = input.split(" ")
             chars(0) match {
+                case "quit" | "q" =>
+                    return 0
                 case "put" | "p" | "place" =>
-                    val p = chars(1) match {
-                        case "W" => Piece.player1
-                        case "w" => Piece.player1
-                        case "B" => Piece.player2
-                        case "b" => Piece.player2
+                    if(chars.size != 3) {
+                        return -1
                     }
-                    val x = chars(2).toInt - 1
-                    val y = chars(3).toInt - 1
-                    controller.put(Some(p), x, y)
+                    val x = chars(1).toInt - 1
+                    val y = chars(2).toInt - 1
+                    controller.put(Some(controller.field.playerstatus), x, y)
                     return 1
-            }
+                case "move" | "m" =>
+                    if(chars.size != 5) {
+                        return -1
+                    }
+                    val x = chars(1).toInt - 1
+                    val y = chars(2).toInt - 1
+                    val newx = chars(3).toInt - 1
+                    val newy = chars(4).toInt - 1
+                    controller.move(Some(controller.field.playerstatus), x, y, newx, newy)                  
+                    return 1
+                case "take" | "t" =>
+                    val x = chars(1).toInt - 1
+                    val y = chars(2).toInt - 1
+                    controller.take(None, x, y)
+                    return 1
+                case "z" =>
+                    controller.undo
+                    return 1
+                case "y" =>
+                    controller.redo
+                    return 1
+                case _ =>
+                    return -1
+                }
         }
 
