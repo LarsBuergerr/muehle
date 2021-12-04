@@ -9,6 +9,7 @@ import model.Field
 import model.MuehlMatrix
 import model.Player
 import scala.annotation.meta.field
+import model.Gamestatus
 
 class TUI(controller: Controller) extends Observer:
     println("Insert Player Names: ")
@@ -47,7 +48,6 @@ class TUI(controller: Controller) extends Observer:
             case _ =>
                 print("Not supported yet\n")
         }
-
 
         def inputloop(in: String): Int = {
             val chars = input.split(" ")

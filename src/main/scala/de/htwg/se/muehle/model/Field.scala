@@ -140,6 +140,10 @@ case class Field(status: Int, size: Int, matr: MuehlMatrix[Option[Piece]]):
         }
     }
 
+    def checktake(): Boolean = {
+        return true
+    }
+
 
     def take(stone: Option[Piece], x: Int, y: Int) = {
         if ((matr.size / 2) == x) {
