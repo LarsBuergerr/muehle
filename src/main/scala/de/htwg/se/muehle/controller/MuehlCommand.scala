@@ -38,3 +38,16 @@ case class TakeCommand(stone: Option[Piece], x: Int, y: Int, controller: Control
         oldfield
     override def redoStep: Field = 
         newfield
+
+case class SelectCommand(x: Int, y: Int, controller: Controller) extends Command(controller):
+    val oldfield = controller.field
+    var newfield = controller.field
+    override def execute: Field = 
+        newfield = controller.field.select(x, y)
+        newfield
+
+    override def undoStep: Field =
+        oldfield
+
+    override def redoStep: Field =
+        newfield

@@ -5,7 +5,7 @@ import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers._
 import model.Field
 import model.Piece._
-
+import model.Gamestatus
 
 
 class FieldSpec extends AnyWordSpec {
@@ -119,12 +119,12 @@ class FieldSpec extends AnyWordSpec {
             "change the Entries in the given matrix by changing '#' to either 'B' or 'W' on the given Coordinates" in {
                 val matr = new MuehlMatrix[Option[Piece]](3, None)
                 val field = new Field(18, 3, matr)
-                val updated1 = field.put(Some(player1), 1, 1)
+                val updated1 = field.put(Some(player1), 0, 0)
                 val updated2 = updated1.put(Some(player2), 3, 1)
-                val updated3 = updated2.put(Some(player1), 6, 1)
-                updated3.matr.cell(1, 1) should be (Some(player1))
+                val updated3 = updated2.put(Some(player1), 5, 1)
+                updated3.matr.cell(0, 0) should be (Some(player1))
                 updated3.matr.mid(1) should be (Some(player2))
-                updated3.matr.cell(5, 1) should be (Some(player1))
+                updated3.matr.cell(4, 1) should be (Some(player1))
             }
         }  
     }

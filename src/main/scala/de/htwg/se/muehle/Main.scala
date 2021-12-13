@@ -9,14 +9,18 @@ import model.Field._
 import model.Field
 import controller.Controller
 import aview.TUI
+import aview.gui.MainGui
+
 @main def Muehle: Unit =
 
-    print("Welcome to the muehle-game, please insert your desired field size [standart = 3]: \n");
-    val input = readLine
-    val size = input.toInt
-    val matr = new MuehlMatrix[Option[Piece]](size, None)
-    val field = new Field(2, size, matr)
+    print("WELCOME TO THE MUEHLE-GAME\n\n\n");
+    val matr = new MuehlMatrix[Option[Piece]](3, None)
+    val field = new Field(18, 3, matr)
     val controller = Controller(field)
     val tui = TUI(controller)
+    val gui = MainGui(controller)
+    gui.startup(Array())
     tui.run
+    
+
 

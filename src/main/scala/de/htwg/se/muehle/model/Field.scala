@@ -1,20 +1,26 @@
 package de.htwg.se.muehle
 package model
 
-import context._
 import de.htwg.se.muehle.controller.PutCommand
 import scala.util.Success
 import scala.util.Try
 import scala.util.Failure
 import Console.{RED, RESET}
+import Point._
 
-case class Field(status: Int, size: Int, matr: MuehlMatrix[Option[Piece]]):
+case class Field(point: Option[Point], status: Int, size: Int, matr: MuehlMatrix[Option[Piece]]):
 
+
+    def this(status: Int, size: Int, matr: MuehlMatrix[Option[Piece]]) = this(None, status, size, matr)
     val corner = "#"
     val top = "-"
     val side = "|"
     val eol = sys.props("line.separator") 
-    val playerstatus = context(status).strategy
+    val playerstatus = 
+        if (status % 2 == 0) then
+            Piece.player1
+        else
+            Piece.player2
 
     val gamestatus =
         if(status > 0) then
@@ -78,12 +84,14 @@ case class Field(status: Int, size: Int, matr: MuehlMatrix[Option[Piece]]):
     }
 
     def put(stone: Option[Piece], x: Int, y: Int) = {
+        //printf("x Value in put methode: %d\n", x)
+        //printf("x Value in put methode: %d\n", x)
         if(checkifempty(x, y) && checkstatusput()) {
             val newstatus = status - 1
             if ((matr.size / 2) == x) {
-                copy(newstatus, size, matr.replaceMid(y, stone))
+                copy(None, newstatus, size, matr.replaceMid(y, stone))
             } else {
-                copy(newstatus, size, matr.replace(x, y, stone))
+                copy(None, newstatus, size, matr.replace(x, y, stone))
             }
         }else {
             Console.println(s"${RED}Field not empty or no playstones left\nPlease try another field or move one of yours stones${RESET}")
@@ -91,17 +99,21 @@ case class Field(status: Int, size: Int, matr: MuehlMatrix[Option[Piece]]):
         }
     }
 
+    def select(x: Int, y: Int): Field =
+        copy(Some(Point(x, y)), status, size, matr)
+
+
     def move(stone: Option[Piece], x: Int, y: Int, xnew: Int, ynew: Int) = {
         if(checkifempty(xnew, ynew) && checkstatusmove()) {
             val newstatus = status - 1
             if ((matr.size / 2) == x && (matr.size / 2) == xnew) {
-                copy(newstatus, size, matr.replaceMid(y, None).replaceMid(ynew, stone))
+                copy(None, newstatus, size, matr.replaceMid(y, None).replaceMid(ynew, stone))
             } else if((matr.size / 2) != x && (matr.size / 2) == xnew) {
-                copy(newstatus, size, matr.replace(x, y, None).replaceMid(ynew, stone))
+                copy(None, newstatus, size, matr.replace(x, y, None).replaceMid(ynew, stone))
             } else if((matr.size / 2) == x && (matr.size / 2) != xnew) {
-                copy(newstatus, size, matr.replaceMid(y, None).replace(xnew, ynew, stone))
+                copy(None, newstatus, size, matr.replaceMid(y, None).replace(xnew, ynew, stone))
             } else {
-                copy(newstatus, size, matr.replace(x, y, None).replace(xnew, ynew, stone))
+                copy(None, newstatus, size, matr.replace(x, y, None).replace(xnew, ynew, stone))
             }
         } else {
             Console.println(s"${RED}Field not empty or playstone left\nPlease try another field or put one of your remaining stones${RESET}")
@@ -114,7 +126,11 @@ case class Field(status: Int, size: Int, matr: MuehlMatrix[Option[Piece]]):
             if ((matr.size / 2) == x) {
                 matr.mid(y).equals(None)
             } else {
-                matr.cell(x, y).equals(None)
+                if((matr.size / 2) < x) {
+                    matr.cell(x - 1, y).equals(None)
+                }else {
+                    matr.cell(x , y).equals(None)
+                }
             }
         } match {
             case Success(x) => x
@@ -147,9 +163,9 @@ case class Field(status: Int, size: Int, matr: MuehlMatrix[Option[Piece]]):
 
     def take(stone: Option[Piece], x: Int, y: Int) = {
         if ((matr.size / 2) == x) {
-            copy(status, size, matr.replaceMid(y, None))
+            copy(None, status, size, matr.replaceMid(y, None))
         } else {
-            copy(status, size, matr.replace(x, y, None))
+            copy(None, status, size, matr.replace(x, y, None))
         } 
     }
 

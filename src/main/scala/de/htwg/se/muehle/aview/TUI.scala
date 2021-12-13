@@ -10,19 +10,25 @@ import model.MuehlMatrix
 import model.Player
 import scala.annotation.meta.field
 import model.Gamestatus
+import scala.swing.Reactor
 
-class TUI(controller: Controller) extends Observer:
+class TUI(controller: Controller) extends Reactor:
     println("Insert Player Names: ")
     val p1 = Player("player1")
     val p2 = Player("player2")
-    controller.add(this)
+    listenTo(controller)
     def run =
         print(controller.field.mesh())
         loop
 
     def this() = this(new Controller(new Field(18, 3, new MuehlMatrix(3, None))))
 
-    override def update = print(controller.field.mesh())
+    reactions += {
+        case fieldchange =>
+        print(controller.field.mesh())
+        println("Selected Point: ")
+        print(controller.field.point.getOrElse(""))
+    }
 
     def loop: Unit =
         if(controller.field.playerstatus.equals(Piece.player1)) then
