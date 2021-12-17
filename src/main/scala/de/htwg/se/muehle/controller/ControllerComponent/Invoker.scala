@@ -1,7 +1,7 @@
 package de.htwg.se.muehle
-package controller
+package controller.ControllerComponent
 
-import model.Field
+import model.FieldComponent._
 
 import util.Command
 
@@ -10,14 +10,14 @@ class Invoker {
   private var undoStack: List[Command] = Nil
   private var redoStack: List[Command] = Nil
 
-  def doStep(command: Command): Field = {
+  def doStep(command: Command): FieldInterface = {
     command match
       case _ =>
         undoStack = command :: undoStack
     command.execute
   }
 
-  def undoStep: Option[Field] = {
+  def undoStep: Option[FieldInterface] = {
     undoStack match {
       case Nil => None
       case head :: stack => {
@@ -28,7 +28,7 @@ class Invoker {
     }
   }
 
-  def redoStep: Option[Field] = {
+  def redoStep: Option[FieldInterface] = {
     redoStack match {
       case Nil => None
       case head :: stack => {

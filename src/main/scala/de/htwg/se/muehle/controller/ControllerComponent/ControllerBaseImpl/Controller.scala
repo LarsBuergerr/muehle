@@ -1,13 +1,13 @@
 package de.htwg.se.muehle
 
-package controller
+package controller.ControllerComponent.ControllerBaseImplementation
 
-import model.Field
-import model.Piece
 import util.Observable
 import scala.swing.Publisher
+import de.htwg.se.muehle.model.FieldComponent.{FieldInterface, Piece}
+import de.htwg.se.muehle.controller.ControllerComponent._
 
-case class Controller(var field: Field) extends Publisher:
+case class Controller(var field: FieldInterface) extends ControllerInterface:
     val invoker = new Invoker
     def put(stone: Option[Piece],x: Int, y: Int) = 
         field = invoker.doStep(PutCommand(stone, x, y, this))

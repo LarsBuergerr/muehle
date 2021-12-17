@@ -4,23 +4,22 @@ package aview
 
 package gui
 
-import controller.Controller
 import scala.swing.BoxPanel
 import scala.swing.Orientation
-import model.Point
+import model.FieldComponent._
 import scala.swing.event.MouseClicked
 import java.awt.Color
-import model.Gamestatus
-import model._
 import javax.swing.border.LineBorder
 import java.awt.Dimension
+import de.htwg.se.muehle.controller.ControllerComponent.ControllerInterface
 
 
-class Tiles(x: Int, y: Int, controller: Controller) extends BoxPanel(Orientation.NoOrientation) {
+
+class Tiles(x: Int, y: Int, controller: ControllerInterface) extends BoxPanel(Orientation.NoOrientation) {
     def putReaction = controller.put(Some(controller.field.playerstatus), x, y)
     def selectReaction = controller.select(x, y)
     def unselectReaction = controller.undo
-    def moveReaction = controller.move(Some(controller.field.playerstatus), controller.field.point.get.x, controller.field.point.get.y, x, y)
+    def moveReaction = controller.move(Some(controller.field.playerstatus), controller.field.getpoint().get.x, controller.field.getpoint().get.y, x, y)
     preferredSize = new Dimension(25, 25)
     border = LineBorder(Color.BLACK)
     listenTo(mouse.clicks)
@@ -31,9 +30,9 @@ class Tiles(x: Int, y: Int, controller: Controller) extends BoxPanel(Orientation
                 putReaction
                 selectReaction
             } else {
-                if(controller.field.point.equals(Some(Point(x, y)))) {
+                if(controller.field.getpoint().equals(Some(Point(x, y)))) {
                     unselectReaction
-                } else if (controller.field.point.isDefined) {
+                } else if (controller.field.getpoint().isDefined) {
                     moveReaction
                 } else {
                     selectReaction
@@ -45,12 +44,12 @@ class Tiles(x: Int, y: Int, controller: Controller) extends BoxPanel(Orientation
 
 
     def redraw() = {
-        if(controller.field.matr.cell(x,y).equals(Some(Piece.player1))) {
+        if(controller.field.getcell(x, y).equals(Some(Piece.player1))) {
             background = Color.WHITE
-        } else if(controller.field.matr.cell(x,y).equals(Some(Piece.player2))){
+        } else if(controller.field.getcell(x, y).equals(Some(Piece.player2))) {
             background = Color.BLACK
         } else {
-            background = Color.GRAY
+            background = Color.LIGHT_GRAY
         }
     }
 }

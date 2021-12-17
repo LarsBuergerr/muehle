@@ -1,5 +1,7 @@
 package de.htwg.se.muehle
-package model
+
+package model.FieldComponent.FieldBaseImpl
+
 import scala.io.StdIn.readLine
 
 

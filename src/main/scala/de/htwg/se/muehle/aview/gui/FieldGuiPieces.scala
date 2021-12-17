@@ -6,16 +6,15 @@ package aview
 package gui
 
 
-import controller._
-import controller.Controller
 import scala.swing._
 import de.htwg.se.muehle.util.Observer
 import java.awt.Dimension
 import java.awt.{Color, Font} 
 import javax.swing.border.LineBorder
+import de.htwg.se.muehle.controller.ControllerComponent.ControllerInterface
 
 
-case class GuiPieces(controller: Controller) {
+case class GuiPieces(controller: ControllerInterface) {
     val player1 = new FlowPanel() {    
             contents += new Label("Spieler1: ")    
             contents += new TextField{columns = 10}     

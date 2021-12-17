@@ -2,12 +2,10 @@ package de.htwg.se.muehle
 
 import scala.io.StdIn.readLine
 import scala.annotation.meta.field
-import model.MuehlMatrix
-import model.Piece
-import model.Piece._
-import model.Field._
-import model.Field
-import controller.Controller
+import model.FieldComponent.FieldBaseImpl.Field
+import model.FieldComponent._
+import controller.ControllerComponent.ControllerBaseImplementation._
+import controller.ControllerComponent._
 import aview.TUI
 import aview.gui.MainGui
 
@@ -21,6 +19,3 @@ import aview.gui.MainGui
     val gui = MainGui(controller)
     gui.startup(Array())
     tui.run
-    
-
-

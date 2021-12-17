@@ -1,13 +1,13 @@
 package de.htwg.se.muehle
 
 package util
-import model.Field
+import model.FieldComponent._
 
-import model.Piece
-import controller.Controller
+import controller.ControllerComponent._
 import javax.swing.undo.UndoManager
+import de.htwg.se.muehle.model.FieldComponent.FieldInterface
 
-trait Command(controller: Controller):
-    def execute: Field
-    def undoStep: Field
-    def redoStep: Field
+trait Command(controller: ControllerInterface):
+    def execute: FieldInterface
+    def undoStep: FieldInterface
+    def redoStep: FieldInterface

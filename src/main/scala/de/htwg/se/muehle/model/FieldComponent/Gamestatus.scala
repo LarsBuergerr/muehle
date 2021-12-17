@@ -1,5 +1,6 @@
 package de.htwg.se.muehle
-package model
+
+package model.FieldComponent
 
 object Gamestatus extends Enumeration {
     type Gamestatus = Value

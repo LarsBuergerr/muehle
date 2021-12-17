@@ -1,5 +1,6 @@
 package de.htwg.se.muehle
-package model
+
+package model.FieldComponent
 
 enum Piece(name: String):
     override def toString: String = name
