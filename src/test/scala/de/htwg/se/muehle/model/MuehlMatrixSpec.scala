@@ -4,8 +4,10 @@ package model
 
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers._
-import MuehlMatrix._
-import Piece._
+import model.FieldComponent._
+import model.FieldComponent.FieldBaseImpl._
+import controller.ControllerComponent._
+import controller.ControllerComponent.ControllerBaseImplementation._
 
 class MuehlMatrixSpec extends AnyWordSpec {
 
@@ -16,7 +18,7 @@ class MuehlMatrixSpec extends AnyWordSpec {
             matrix.size should be(6)
             matrix.rows(0).forall(p => p == None) should be(true)
             matrix.rows(1).forall(p => p == None) should be(true)
-            matrix.rows(2).forall(p => p == Some(player1)) should be(false)
+            matrix.rows(2).forall(p => p == Some(Piece.player1)) should be(false)
             matrix.mid(5) shouldBe(None)
         }
         "have a middlerow which width should be double the size" in {
@@ -27,34 +29,34 @@ class MuehlMatrixSpec extends AnyWordSpec {
         "have a filling if you do so by using the fill methode" in {
             val matrix = new MuehlMatrix[Option[Piece]](3, None)
             matrix.rows(0) shouldBe(Vector(None, None, None))
-            matrix.fill(Some(player1)) shouldBe(MuehlMatrix(Vector(Vector(Some(player1), Some(player1), Some(player1)),
-                Vector(Some(player1), Some(player1), Some(player1)),
-                Vector(Some(player1), Some(player1), Some(player1)),
-                Vector(Some(player1), Some(player1), Some(player1)),
-                Vector(Some(player1), Some(player1), Some(player1)),
-                Vector(Some(player1), Some(player1), Some(player1))),
-                Vector(Some(player1), Some(player1), Some(player1), Some(player1), Some(player1), Some(player1))))
+            matrix.fill(Some(Piece.player1)) shouldBe(MuehlMatrix(Vector(Vector(Some(Piece.player1), Some(Piece.player1), Some(Piece.player1)),
+                Vector(Some(Piece.player1), Some(Piece.player1), Some(Piece.player1)),
+                Vector(Some(Piece.player1), Some(Piece.player1), Some(Piece.player1)),
+                Vector(Some(Piece.player1), Some(Piece.player1), Some(Piece.player1)),
+                Vector(Some(Piece.player1), Some(Piece.player1), Some(Piece.player1)),
+                Vector(Some(Piece.player1), Some(Piece.player1), Some(Piece.player1))),
+                Vector(Some(Piece.player1), Some(Piece.player1), Some(Piece.player1), Some(Piece.player1), Some(Piece.player1), Some(Piece.player1))))
         }
         "change the filling by using the replace and replaceMid methode" in {
             val matrix = new MuehlMatrix[Option[Piece]](3, None)
             matrix.rows(0) shouldBe(Vector(None, None, None))
-            val newmatrix = matrix.replace(0,0,Some(player1))
-            val newmatrix2 = newmatrix.replaceMid(5, Some(player1))
-            newmatrix.rows(0) shouldBe(Vector(Some(player1), None, None))
-            newmatrix2.middle shouldBe(Vector(None, None, None, None, None, Some(player1)))
+            val newmatrix = matrix.replace(0,0,Some(Piece.player1))
+            val newmatrix2 = newmatrix.replaceMid(5, Some(Piece.player1))
+            newmatrix.rows(0) shouldBe(Vector(Some(Piece.player1), None, None))
+            newmatrix2.middle shouldBe(Vector(None, None, None, None, None, Some(Piece.player1)))
         
         }
         "return the filling of a single cell by using the cell methode" in {
-            val matrix = new MuehlMatrix[Option[Piece]](2, Some(player1))
-            matrix.cell(0, 0) shouldBe(Some(player1))
-            matrix.cell(0, 1) shouldBe(Some(player1))
-            matrix.cell(1, 0) shouldBe(Some(player1))
-            matrix.cell(1, 1) shouldBe(Some(player1))
-            val matrix2 = new MuehlMatrix[Option[Piece]](2, Some(player2))
-            matrix2.cell(0, 0) shouldBe(Some(player2))
-            matrix2.cell(0, 1) shouldBe(Some(player2))
-            matrix2.cell(1, 0) shouldBe(Some(player2))
-            matrix2.cell(1, 1) shouldBe(Some(player2))
+            val matrix = new MuehlMatrix[Option[Piece]](2, Some(Piece.player1))
+            matrix.cell(0, 0) shouldBe(Some(Piece.player1))
+            matrix.cell(0, 1) shouldBe(Some(Piece.player1))
+            matrix.cell(1, 0) shouldBe(Some(Piece.player1))
+            matrix.cell(1, 1) shouldBe(Some(Piece.player1))
+            val matrix2 = new MuehlMatrix[Option[Piece]](2, Some(Piece.player2))
+            matrix2.cell(0, 0) shouldBe(Some(Piece.player2))
+            matrix2.cell(0, 1) shouldBe(Some(Piece.player2))
+            matrix2.cell(1, 0) shouldBe(Some(Piece.player2))
+            matrix2.cell(1, 1) shouldBe(Some(Piece.player2))
         }
     }
 }

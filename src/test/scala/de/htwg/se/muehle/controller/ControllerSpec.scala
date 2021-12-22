@@ -3,10 +3,10 @@ package controller
 
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers._
-import model.Piece
-import model.MuehlMatrix
-import model.Field
-import model.Piece._
+import model.FieldComponent._
+import model.FieldComponent.FieldBaseImpl._
+import controller.ControllerComponent._
+import controller.ControllerComponent.ControllerBaseImplementation._
 
 class ControllerSpec extends AnyWordSpec {
     "A Controller" should {
@@ -23,10 +23,10 @@ class ControllerSpec extends AnyWordSpec {
             var matr = new MuehlMatrix[Option[Piece]](3, None)
             var field = new Field(18, 3, matr)
             var controller = new Controller(field)
-            controller.put(Some(player1),1, 1)
-            controller.put(Some(player2),2, 1)
-            controller.field.matr.cell(1, 1) shouldBe(Some(player1))
-            controller.field.matr.cell(2, 1) shouldBe(Some(player2))
+            controller.put(Some(Piece.player1),1, 1)
+            controller.put(Some(Piece.player2),2, 1)
+            controller.field.matr.cell(1, 1) shouldBe(Some(Piece.player1))
+            controller.field.matr.cell(2, 1) shouldBe(Some(Piece.player2))
         }
     }
 }

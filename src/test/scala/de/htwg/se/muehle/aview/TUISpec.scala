@@ -2,11 +2,10 @@ package de.htwg.se.muehle
 
 package util
 
-import model.Piece
-import model.MuehlMatrix
-import model.Field
-import model.Piece._
-import controller.Controller
+import model.FieldComponent._
+import model.FieldComponent.FieldBaseImpl._
+import controller.ControllerComponent._
+import controller.ControllerComponent.ControllerBaseImplementation._
 import org.scalatest.matchers.should.Matchers._
 import org.scalatest.wordspec.AnyWordSpec
 import de.htwg.se.muehle.aview.TUI
@@ -17,7 +16,7 @@ class TUISpec extends AnyWordSpec {
             val matr = new MuehlMatrix[Option[Piece]](3, None)
             val field = new Field(18, 3, matr)
             val controller = new Controller(field)
-            val tui = new TUI
+            val tui = new TUI(controller)
         }
     }
 }

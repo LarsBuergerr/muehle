@@ -3,9 +3,10 @@ package model
 
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers._
-import model.Field
-import model.Piece._
-import model.Gamestatus
+import model.FieldComponent._
+import model.FieldComponent.FieldBaseImpl._
+import controller.ControllerComponent._
+import controller.ControllerComponent.ControllerBaseImplementation._
 
 
 class FieldSpec extends AnyWordSpec {
@@ -16,11 +17,11 @@ class FieldSpec extends AnyWordSpec {
                 val matr = new MuehlMatrix[Option[Piece]](3, None)
                 val field = new Field(18, 3, matr)
                 field.line(2, 2, Vector(None, None)) should be ("#--#")
-                field.line(3, 3, Vector(Some(player1), Some(player2), Some(player2))) should be ("W---B---B")
-                field.line(4, 4, Vector(None, None, Some(player1), None)) should be ("#----#----W----#")
+                field.line(3, 3, Vector(Some(Piece.player1), Some(Piece.player2), Some(Piece.player2))) should be ("W---B---B")
+                field.line(4, 4, Vector(None, None, Some(Piece.player1), None)) should be ("#----#----W----#")
                 field.line(1, 5, Vector(None, None, None, None, None)) should be ("#-#-#-#-#")
                 field.line(5, 2, Vector(None, None)) should be ("#-----#")
-                field.line(0, 4, Vector(None, None, None, Some(player2))) should be ("###B")
+                field.line(0, 4, Vector(None, None, None, Some(Piece.player2))) should be ("###B")
                 field.line(6, 0, Vector(None)) should be ("#")
             }
         }
@@ -29,7 +30,7 @@ class FieldSpec extends AnyWordSpec {
                 val matr = new MuehlMatrix[Option[Piece]](3, None)
                 val field = new Field(18, 3, matr)
                 field.lineWLine(2,2,2, Vector(None, None, None, None)) should be ("#--#  #--#")
-                field.lineWLine(4,1,3, Vector(Some(player1), Some(player2),Some(player1), Some(player2),Some(player1), Some(player2))) should be
+                field.lineWLine(4,1,3, Vector(Some(Piece.player1), Some(Piece.player2),Some(Piece.player1), Some(Piece.player2),Some(Piece.player1), Some(Piece.player2))) should be
                     ("W----B----W B----W----B")
                 field.lineWLine(1,4,3, Vector(None, None, None, None, None, None)) should be
                     ("#-#-#    #-#-#")
@@ -119,12 +120,12 @@ class FieldSpec extends AnyWordSpec {
             "change the Entries in the given matrix by changing '#' to either 'B' or 'W' on the given Coordinates" in {
                 val matr = new MuehlMatrix[Option[Piece]](3, None)
                 val field = new Field(18, 3, matr)
-                val updated1 = field.put(Some(player1), 0, 0)
-                val updated2 = updated1.put(Some(player2), 3, 1)
-                val updated3 = updated2.put(Some(player1), 5, 1)
-                updated3.matr.cell(0, 0) should be (Some(player1))
-                updated3.matr.mid(1) should be (Some(player2))
-                updated3.matr.cell(4, 1) should be (Some(player1))
+                val updated1 = field.put(Some(Piece.player1), 0, 0)
+                val updated2 = updated1.put(Some(Piece.player2), 3, 1)
+                val updated3 = updated2.put(Some(Piece.player1), 5, 1)
+                updated3.matr.cell(0, 0) should be (Some(Piece.player1))
+                updated3.matr.mid(1) should be (Some(Piece.player2))
+                updated3.matr.cell(4, 1) should be (Some(Piece.player1))
             }
         }  
     }
