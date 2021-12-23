@@ -20,6 +20,17 @@ case class MuehlMatrix[T](rows: Vector[Vector[T]], middle: Vector[T]):
             cell(row, col)
         }
 
+    def mcell(rowi: Int, coli: Int): T = 
+        var row = rowi - 1;
+        var col = coli - 1;
+        if((size / 2) == row) {
+            mid(col)
+        } else if((size / 2) < row) {
+            cell(row - 1, col)
+        } else {
+            cell(row, col)
+        }
+
     def fill(filling: T): MuehlMatrix[T] = copy((Vector.tabulate(size, 3) { (row, col) => filling}), Vector.fill(size)(filling))
 
     def replaceMatr(row: Int, col: Int, fill: T): MuehlMatrix[T] =

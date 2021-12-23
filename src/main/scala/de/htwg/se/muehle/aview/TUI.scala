@@ -3,7 +3,7 @@ package de.htwg.se.muehle
 package aview
 import scala.io.StdIn.readLine
 import util.Observer
-import model.FieldComponent.{MuehlMatrix, Piece}
+import model.FieldComponent.{MuehlMatrix, Piece, MuehlStrat}
 import model.FieldComponent.FieldBaseImpl._
 import scala.swing.Reactor
 import de.htwg.se.muehle.controller.ControllerComponent.ControllerInterface
@@ -63,6 +63,7 @@ class TUI(controller: ControllerInterface) extends Reactor:
                     val x = chars(1).toInt - 1
                     val y = chars(2).toInt - 1
                     controller.put(Some(controller.field.playerstatus), x, y)
+                    println(controller.field.gamestatus)
                     return 1
                 case "move" | "m" =>
                     if(chars.size != 5) {

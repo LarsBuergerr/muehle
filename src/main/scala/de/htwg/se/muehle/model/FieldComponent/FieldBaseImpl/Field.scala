@@ -8,10 +8,10 @@ import scala.util.Try
 import scala.util.Failure
 import Console.{RED, RESET}
 
-case class Field(point: Option[Point], status: Int, size: Int, matr: MuehlMatrix[Option[Piece]]) extends FieldInterface:
+case class Field(mill: Int, point: Option[Point], status: Int, size: Int, matr: MuehlMatrix[Option[Piece]]) extends FieldInterface:
 
 
-    def this(status: Int, size: Int, matr: MuehlMatrix[Option[Piece]]) = this(None, status, size, matr)
+    def this(status: Int, size: Int, matr: MuehlMatrix[Option[Piece]]) = this(0 , None, status, size, matr)
     val corner = "#"
     val top = "-"
     val side = "|"
@@ -23,12 +23,14 @@ case class Field(point: Option[Point], status: Int, size: Int, matr: MuehlMatrix
             Piece.player2
 
     val gamestatus =
-        if(status > 0) then
+        if(mill == 0) {
+            if(status > 0) then
             Gamestatus.put
-        else if(status <= 0)
-            Gamestatus.move
         else
+            Gamestatus.move
+        } else {
             Gamestatus.take
+        }
 
     def line(width: Int, depth: Int, pieces: Vector[Option[Piece]]): String = {
         (pieces.take(depth - 1).map(p => p.getOrElse("#").toString + top * width)).mkString + pieces.last.getOrElse("#").toString
@@ -83,9 +85,14 @@ case class Field(point: Option[Point], status: Int, size: Int, matr: MuehlMatrix
     }
 
     def put(stone: Option[Piece], x: Int, y: Int) = {
-        if(checkifempty(x, y) && checkstatusput()) {
+        if(checkput(x, y)) {
             val newstatus = status - 1
-            copy(None, newstatus, size, matr.replace(x, y, stone))
+            val newmatr = matr.replace(x, y, stone)
+            if(MuehlStrat(x, y, stone, newmatr).muehlstrat()) {
+                copy(1, None, status, size, newmatr)
+            } else {
+                copy(0, None, newstatus, size, newmatr)
+            }
         }else {
             Console.println(s"${RED}Field not empty or no playstones left\nPlease try another field or move one of yours stones${RESET}")
             this
@@ -93,13 +100,18 @@ case class Field(point: Option[Point], status: Int, size: Int, matr: MuehlMatrix
     }
 
     def select(x: Int, y: Int): Field =
-        copy(Some(Point(x, y)), status, size, matr)
+        copy(0, Some(Point(x, y)), status, size, matr)
 
 
     def move(stone: Option[Piece], x: Int, y: Int, xnew: Int, ynew: Int) = {
-        if(checkifempty(xnew, ynew) && checkstatusmove()) {
+        if(checkmove(x, y, xnew, ynew)) {
             val newstatus = status - 1
-            copy(None, newstatus, size, matr.replace(x, y, None).replace(xnew, ynew, stone))
+            val newmatr = matr.replace(x, y, None).replace(xnew, ynew, stone)
+            if(MuehlStrat(xnew, ynew, stone, newmatr).muehlstrat()) {
+                copy(1, None, status, size, newmatr)
+            } else {
+                copy(0, None, newstatus, size, newmatr)
+            }
         } else {
             Console.println(s"${RED}Field not empty or playstone left\nPlease try another field or put one of your remaining stones${RESET}")
             this
@@ -115,30 +127,73 @@ case class Field(point: Option[Point], status: Int, size: Int, matr: MuehlMatrix
         }
     }
 
-    def checkstatusmove(): Boolean = {
+    def checkmove(x: Int, y: Int, newx: Int, newy: Int): Boolean = {
         Try {
-            (gamestatus.equals(Gamestatus.move))
+            (gamestatus.equals(Gamestatus.move) &&
+            checkifempty(newx, newy) &&
+            (matr.checkcell(x, y).equals(Some(playerstatus))) &&
+            inBounds(x, y))
         } match {
             case Success(x) => x
             case Failure(y) => false
         }
     }
 
-    def checkstatusput(): Boolean = {
+    def checkput(x: Int, y: Int): Boolean = {
         Try {
-            (gamestatus.equals(Gamestatus.put))
+            (gamestatus.equals(Gamestatus.put) &&
+            checkifempty(x, y) &&
+            inBounds(x, y))
         } match {
             case Success(x) => x
             case Failure(y) => false
         }
     }
 
-    def checktake(): Boolean = {
-        return true
+    def inBounds(x: Int, y: Int): Boolean = {
+        if(x > 6) {
+            return false;
+        } else {
+            if(x == 4) {
+                if(y > 5) {
+                    return false;
+                } else {
+                    return true;
+                }
+            } else {
+                if(y > 2) {
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+        }
+    }
+
+    def checktake(stone: Option[Piece], x: Int, y: Int): Boolean = {
+        Try {
+            (gamestatus.equals(Gamestatus.take) && 
+            (!matr.checkcell(x, y).equals(Some(playerstatus)) &&
+            !matr.checkcell(x, y).equals(None)) && 
+            inBounds(x, y))
+        } match {
+            case Success(x) => x
+            case Failure(y) => false
+        }
     }
 
 
     def take(stone: Option[Piece], x: Int, y: Int) = {
-        copy(None, status, size, matr.replace(x, y, None))
+        if(checktake(stone, x, y)) {
+            val newstatus = status - 1
+            if(!MuehlStrat(x, y, stone, matr).muehlstrat()) {
+                copy(0, None, newstatus, size, matr.replace(x, y, None))
+            } else {
+                this
+            }
+        } else {
+            Console.println(s"${RED}Cannot take this Stone or arent allowed to take a stone${RESET}")
+            this
+        }
     }
 
