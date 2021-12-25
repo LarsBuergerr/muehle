@@ -14,23 +14,27 @@ import javax.swing.border.LineBorder
 
 class MainGui(controller: ControllerInterface) extends SimpleSwingApplication {
     def top = new MainFrame {
+        var pieces = GuiPieces(controller)
         title = "Muehle Game"
         centerOnScreen()
-        contents = GuiPieces(controller).finalBox
-        visible = true
+        contents = pieces.finalBox
         listenTo(controller)
 
         reactions += {
             case e: fieldchange => redraw
         }
 
-    }
-    def redraw = {
-        def top = new MainFrame {
-        title = "Muehle Game"
-        centerOnScreen()
-        contents = GuiPieces(controller).finalBox
-        visible = true
+        def redraw = {
+            for(x <- 0 to 2) {
+                for(y <- 0 to 2) {
+                    pieces.top(x)(y).redraw()
+                    pieces.bot(x)(y).redraw()
+                }
+            }
+            for(x <- 0 to 5) {
+                pieces.mid(x).redraw()
+            }
         }
+        visible = true
     }
 }

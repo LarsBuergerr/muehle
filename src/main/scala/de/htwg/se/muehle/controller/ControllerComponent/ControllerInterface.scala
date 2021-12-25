@@ -8,6 +8,7 @@ import scala.swing.Publisher
 
 trait ControllerInterface extends Publisher:
 
+
     var field: FieldInterface
 
     val invoker: Invoker
@@ -23,3 +24,5 @@ trait ControllerInterface extends Publisher:
     def take(stone: Option[Piece], x: Int, y: Int): Unit
 
     def select(x: Int, y: Int): Unit
+
+    def movetake(stone: Option[Piece], x: Int, y: Int): Unit

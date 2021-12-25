@@ -29,4 +29,10 @@ trait FieldInterface {
     def getpoint() = point
 
     def getcell(x: Int, y: Int) = matr.checkcell(x, y)
+
+    def checkmove(x: Int, y: Int, newx: Int, newy: Int): Boolean
+
+    def checktake(stone: Option[Piece], x: Int, y: Int): Boolean
+
+    def movetake(stone: Option[Piece], x: Int, y: Int): FieldInterface
 }

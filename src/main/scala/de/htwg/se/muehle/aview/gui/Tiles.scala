@@ -12,14 +12,19 @@ import java.awt.Color
 import javax.swing.border.LineBorder
 import java.awt.Dimension
 import de.htwg.se.muehle.controller.ControllerComponent.ControllerInterface
+import de.htwg.se.muehle.controller.ControllerComponent.fieldchange
 
 
 
 class Tiles(x: Int, y: Int, controller: ControllerInterface) extends BoxPanel(Orientation.NoOrientation) {
+
     def putReaction = controller.put(Some(controller.field.playerstatus), x, y)
     def selectReaction = controller.select(x, y)
-    def unselectReaction = controller.undo
+    def undoReaction = controller.undo
     def moveReaction = controller.move(Some(controller.field.playerstatus), controller.field.getpoint().get.x, controller.field.getpoint().get.y, x, y)
+    def takeReaction = controller.take(None, x, y)
+    def movetakeReaction(x: Int, y: Int) = controller.movetake(None, x, y)
+    
     preferredSize = new Dimension(25, 25)
     border = LineBorder(Color.BLACK)
     listenTo(mouse.clicks)
@@ -28,23 +33,41 @@ class Tiles(x: Int, y: Int, controller: ControllerInterface) extends BoxPanel(Or
         case e: MouseClicked => {
             if(controller.field.gamestatus.equals(Gamestatus.put)) {
                 putReaction
-                selectReaction
+            } else if(controller.field.gamestatus.equals(Gamestatus.take)) {
+                if(controller.field.checktake(Some(controller.field.playerstatus), x, y)) {
+                    takeReaction
+                }else{
+                    println("didnt work")
+                }
+                
             } else {
                 if(controller.field.getpoint().equals(Some(Point(x, y)))) {
-                    unselectReaction
+                    //undoReaction
+                    undoReaction
                 } else if (controller.field.getpoint().isDefined) {
-                    moveReaction
+                    var tmp = controller.field.point
+                    if(controller.field.checkmove(controller.field.getpoint().get.x, controller.field.getpoint().get.y, x, y)){
+                        moveReaction
+                    } else {
+                        //undoReaction
+                        undoReaction
+                    }
+                    
                 } else {
+                    //movetakeReaction(x, y)
                     selectReaction
                 }
-            } 
+            }
             redraw()
         }
     }
 
 
     def redraw() = {
-        if(controller.field.getcell(x, y).equals(Some(Piece.player1))) {
+        if(controller.field.point.isDefined && 
+        controller.field.getpoint().get.x.equals(x) && controller.field.getpoint().get.y.equals(y)){
+            background = Color.GREEN
+        } else if(controller.field.getcell(x, y).equals(Some(Piece.player1))) {
             background = Color.WHITE
         } else if(controller.field.getcell(x, y).equals(Some(Piece.player2))) {
             background = Color.BLACK

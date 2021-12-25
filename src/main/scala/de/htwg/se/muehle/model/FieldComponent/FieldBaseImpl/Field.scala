@@ -154,7 +154,7 @@ case class Field(mill: Int, point: Option[Point], status: Int, size: Int, matr: 
         if(x > 6) {
             return false;
         } else {
-            if(x == 4) {
+            if(x == 3) {
                 if(y > 5) {
                     return false;
                 } else {
@@ -175,6 +175,7 @@ case class Field(mill: Int, point: Option[Point], status: Int, size: Int, matr: 
             (gamestatus.equals(Gamestatus.take) && 
             (!matr.checkcell(x, y).equals(Some(playerstatus)) &&
             !matr.checkcell(x, y).equals(None)) && 
+            !MuehlStrat(x, y, stone, matr).muehlstrat() &&
             inBounds(x, y))
         } match {
             case Success(x) => x
@@ -186,14 +187,19 @@ case class Field(mill: Int, point: Option[Point], status: Int, size: Int, matr: 
     def take(stone: Option[Piece], x: Int, y: Int) = {
         if(checktake(stone, x, y)) {
             val newstatus = status - 1
-            if(!MuehlStrat(x, y, stone, matr).muehlstrat()) {
-                copy(0, None, newstatus, size, matr.replace(x, y, None))
-            } else {
-                this
-            }
+            copy(0, None, newstatus, size, matr.replace(x, y, None))
         } else {
             Console.println(s"${RED}Cannot take this Stone or arent allowed to take a stone${RESET}")
             this
         }
+    }
+
+    def movetake(stone: Option[Piece], x: Int, y: Int) = {
+        if(matr.checkcell(x, y).equals(Some(playerstatus)) &&
+            inBounds(x, y)) {
+                copy(0, point, status, size, matr.replace(x, y, None))
+            } else {
+                this
+            }
     }
 

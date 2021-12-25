@@ -34,3 +34,7 @@ case class Controller(var field: FieldInterface) extends ControllerInterface:
     def select(x: Int, y: Int) =
         field = invoker.doStep(SelectCommand(x, y, this))
         publish(new fieldchange)
+
+    def movetake(stone: Option[Piece], x: Int, y: Int) =
+        field = invoker.doStep(MoveTakeCommand(stone, x, y,this))
+        publish(new fieldchange)

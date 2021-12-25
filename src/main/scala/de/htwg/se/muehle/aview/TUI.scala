@@ -24,6 +24,7 @@ class TUI(controller: ControllerInterface) extends Reactor:
         case fieldchange =>
         print(controller.field.mesh())
         println("Selected Point: ")
+        println(controller.field.point)
     }
 
     def loop: Unit =
