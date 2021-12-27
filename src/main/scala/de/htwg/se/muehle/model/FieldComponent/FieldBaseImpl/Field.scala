@@ -88,7 +88,7 @@ case class Field(mill: Int, point: Option[Point], status: Int, size: Int, matr: 
         if(checkput(x, y)) {
             val newstatus = status - 1
             val newmatr = matr.replace(x, y, stone)
-            if(MuehlStrat(x, y, stone, newmatr).muehlstrat()) {
+            if(isMill(x, y, stone, newmatr).muehlstrat()) {
                 copy(1, None, status, size, newmatr)
             } else {
                 copy(0, None, newstatus, size, newmatr)
@@ -107,7 +107,7 @@ case class Field(mill: Int, point: Option[Point], status: Int, size: Int, matr: 
         if(checkmove(x, y, xnew, ynew)) {
             val newstatus = status - 1
             val newmatr = matr.replace(x, y, None).replace(xnew, ynew, stone)
-            if(MuehlStrat(xnew, ynew, stone, newmatr).muehlstrat()) {
+            if(isMill(xnew, ynew, stone, newmatr).muehlstrat()) {
                 copy(1, None, status, size, newmatr)
             } else {
                 copy(0, None, newstatus, size, newmatr)
@@ -132,7 +132,8 @@ case class Field(mill: Int, point: Option[Point], status: Int, size: Int, matr: 
             (gamestatus.equals(Gamestatus.move) &&
             checkifempty(newx, newy) &&
             (matr.checkcell(x, y).equals(Some(playerstatus))) &&
-            inBounds(x, y))
+            inBounds(x, y) &&
+            isValidMove(x, y ,newx, newy).movestrat())
         } match {
             case Success(x) => x
             case Failure(y) => false
@@ -175,7 +176,8 @@ case class Field(mill: Int, point: Option[Point], status: Int, size: Int, matr: 
             (gamestatus.equals(Gamestatus.take) && 
             (!matr.checkcell(x, y).equals(Some(playerstatus)) &&
             !matr.checkcell(x, y).equals(None)) && 
-            !MuehlStrat(x, y, stone, matr).muehlstrat() &&
+            !isMill(x, y, Some(Piece.player1), matr).muehlstrat() &&
+            !isMill(x, y, Some(Piece.player2), matr).muehlstrat() &&
             inBounds(x, y))
         } match {
             case Success(x) => x

@@ -3,14 +3,13 @@ package de.htwg.se.muehle
 package aview
 import scala.io.StdIn.readLine
 import util.Observer
-import model.FieldComponent.{MuehlMatrix, Piece, MuehlStrat}
+import model.FieldComponent.{MuehlMatrix, Piece}
 import model.FieldComponent.FieldBaseImpl._
 import scala.swing.Reactor
 import de.htwg.se.muehle.controller.ControllerComponent.ControllerInterface
 import de.htwg.se.muehle.controller.ControllerComponent.ControllerBaseImplementation._
 
 class TUI(controller: ControllerInterface) extends Reactor:
-    println("Insert Player Names: ")
     val p1 = Player("player1")
     val p2 = Player("player2")
     listenTo(controller)
@@ -23,8 +22,6 @@ class TUI(controller: ControllerInterface) extends Reactor:
     reactions += {
         case fieldchange =>
         print(controller.field.mesh())
-        println("Selected Point: ")
-        println(controller.field.point)
     }
 
     def loop: Unit =

@@ -26,8 +26,10 @@ case class GuiPieces(controller: ControllerInterface) {
 
 
     val player1 = new FlowPanel() {    
-            contents += new Label("Spieler1: ")    
-            contents += new TextField{columns = 10}     
+            contents += new Label("Spieler1: ")
+            val textp1 = new TextField{columns = 10}
+            textp1.editable = false
+            contents += textp1
         }
     val player2 = new FlowPanel() {    
             contents += new Label("Spieler2: ")    
@@ -55,6 +57,7 @@ case class GuiPieces(controller: ControllerInterface) {
         contents+= new TextField(columns = 50)
         border = Swing.EmptyBorder(0, 0, 25, 0)
     }
+
     val field1 = new FlowPanel() {
         hGap = 150
         contents += top(0)(0)
@@ -110,17 +113,26 @@ case class GuiPieces(controller: ControllerInterface) {
             contents += mid(5)
         }
     }
+
+    val finalfield = new BoxPanel(Orientation.Vertical) {
+        background = Color.PINK
+        contents += field1
+        contents += field2
+        contents += field3
+        contents += fieldmid
+        contents += field33
+        contents += field22
+        contents += field11
+
+        visible = true
+
+    }
     val finalBox = new BoxPanel(Orientation.Vertical) {
+
         contents += player
             contents += stones
             contents += turn
-            contents += field1
-            contents += field2
-            contents += field3
-            contents += fieldmid
-            contents += field33
-            contents += field22
-            contents += field11
+            contents += finalfield
     }
 }
 

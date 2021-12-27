@@ -16,6 +16,7 @@ import de.htwg.se.muehle.controller.ControllerComponent.fieldchange
 
 
 
+
 class Tiles(x: Int, y: Int, controller: ControllerInterface) extends BoxPanel(Orientation.NoOrientation) {
 
     def putReaction = controller.put(Some(controller.field.playerstatus), x, y)
@@ -64,9 +65,20 @@ class Tiles(x: Int, y: Int, controller: ControllerInterface) extends BoxPanel(Or
 
 
     def redraw() = {
-        if(controller.field.point.isDefined && 
-        controller.field.getpoint().get.x.equals(x) && controller.field.getpoint().get.y.equals(y)){
-            background = Color.GREEN
+        if(controller.field.point.isDefined) {
+            if(controller.field.getpoint().get.x.equals(x) && controller.field.getpoint().get.y.equals(y)){
+                background = Color.GREEN
+            } else if(controller.field.checkmove(controller.field.getpoint().get.x, controller.field.getpoint().get.y, x, y)) {
+                background = Color.ORANGE
+            } else {
+                if(controller.field.getcell(x, y).equals(Some(Piece.player1))) {
+                    background = Color.WHITE
+                } else if(controller.field.getcell(x, y).equals(Some(Piece.player2))) {
+                    background = Color.BLACK
+                } else {
+                background = Color.LIGHT_GRAY
+                }
+            }
         } else if(controller.field.getcell(x, y).equals(Some(Piece.player1))) {
             background = Color.WHITE
         } else if(controller.field.getcell(x, y).equals(Some(Piece.player2))) {
