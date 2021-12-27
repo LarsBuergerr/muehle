@@ -8,7 +8,7 @@ import model.FieldComponent._
 import model.FieldComponent.FieldBaseImpl._
 import controller.ControllerComponent._
 import controller.ControllerComponent.ControllerBaseImplementation._
-import model.FieldComponent.FieldBaseImpl.Player
+
 
 class PieceSpec extends AnyWordSpec {
     "Piece" should {
