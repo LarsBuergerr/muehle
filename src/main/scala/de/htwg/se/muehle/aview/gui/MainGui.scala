@@ -21,7 +21,7 @@ class MainGui(controller: ControllerInterface) extends SimpleSwingApplication {
         listenTo(controller)
 
         reactions += {
-            case e: fieldchange => redraw
+            case e: fieldchange => redraw;checkwin
         }
 
         def redraw = {
@@ -33,6 +33,17 @@ class MainGui(controller: ControllerInterface) extends SimpleSwingApplication {
             }
             for(x <- 0 to 5) {
                 pieces.mid(x).redraw()
+            }
+            pieces.p1stones.text = controller.field.player.p1stones.toString
+            pieces.p2stones.text = controller.field.player.p2stones.toString
+        }
+        def checkwin = {
+            if(controller.field.player.p1stones == 0) {
+                pieces.textp1.text = "PLAYER 2 WON"
+                quit
+            } else if(controller.field.player.p2stones == 0) {
+                pieces.textp1.text = "PLAYER 1 WON"
+                quit
             }
         }
         visible = true

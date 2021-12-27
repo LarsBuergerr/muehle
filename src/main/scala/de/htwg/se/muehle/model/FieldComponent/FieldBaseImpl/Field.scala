@@ -8,10 +8,12 @@ import scala.util.Try
 import scala.util.Failure
 import Console.{RED, RESET}
 
-case class Field(mill: Int, point: Option[Point], status: Int, size: Int, matr: MuehlMatrix[Option[Piece]]) extends FieldInterface:
+case class Field(player: Player, mill: Int, point: Option[Point], status: Int, size: Int, matr: MuehlMatrix[Option[Piece]]) extends FieldInterface:
 
 
-    def this(status: Int, size: Int, matr: MuehlMatrix[Option[Piece]]) = this(0 , None, status, size, matr)
+    def this(status: Int, size: Int, matr: MuehlMatrix[Option[Piece]]) = this(Player(6, 6), 0 , None, status, size, matr)
+    val p1 = player.player1
+    val p2 = player.player2
     val corner = "#"
     val top = "-"
     val side = "|"
@@ -89,9 +91,9 @@ case class Field(mill: Int, point: Option[Point], status: Int, size: Int, matr: 
             val newstatus = status - 1
             val newmatr = matr.replace(x, y, stone)
             if(isMill(x, y, stone, newmatr).muehlstrat()) {
-                copy(1, None, status, size, newmatr)
+                copy(Player(p1, p2), 1, None, status, size, newmatr)
             } else {
-                copy(0, None, newstatus, size, newmatr)
+                copy(Player(p1, p2), 0, None, newstatus, size, newmatr)
             }
         }else {
             Console.println(s"${RED}Field not empty or no playstones left\nPlease try another field or move one of yours stones${RESET}")
@@ -100,7 +102,7 @@ case class Field(mill: Int, point: Option[Point], status: Int, size: Int, matr: 
     }
 
     def select(x: Int, y: Int): Field =
-        copy(0, Some(Point(x, y)), status, size, matr)
+        copy(Player(p1, p2), 0, Some(Point(x, y)), status, size, matr)
 
 
     def move(stone: Option[Piece], x: Int, y: Int, xnew: Int, ynew: Int) = {
@@ -108,9 +110,9 @@ case class Field(mill: Int, point: Option[Point], status: Int, size: Int, matr: 
             val newstatus = status - 1
             val newmatr = matr.replace(x, y, None).replace(xnew, ynew, stone)
             if(isMill(xnew, ynew, stone, newmatr).muehlstrat()) {
-                copy(1, None, status, size, newmatr)
+                copy(Player(p1, p2), 1, None, status, size, newmatr)
             } else {
-                copy(0, None, newstatus, size, newmatr)
+                copy(Player(p1, p2), 0, None, newstatus, size, newmatr)
             }
         } else {
             Console.println(s"${RED}Field not empty or playstone left\nPlease try another field or put one of your remaining stones${RESET}")
@@ -189,19 +191,15 @@ case class Field(mill: Int, point: Option[Point], status: Int, size: Int, matr: 
     def take(stone: Option[Piece], x: Int, y: Int) = {
         if(checktake(stone, x, y)) {
             val newstatus = status - 1
-            copy(0, None, newstatus, size, matr.replace(x, y, None))
+            if(playerstatus.equals(Piece.player2)) {
+                copy(Player(p1 - 1, p2), 0, None, newstatus, size, matr.replace(x, y, None))
+            } else {
+                copy(Player(p1, p2 - 1), 0, None, newstatus, size, matr.replace(x, y, None))
+            }
+            
         } else {
             Console.println(s"${RED}Cannot take this Stone or arent allowed to take a stone${RESET}")
             this
         }
-    }
-
-    def movetake(stone: Option[Piece], x: Int, y: Int) = {
-        if(matr.checkcell(x, y).equals(Some(playerstatus)) &&
-            inBounds(x, y)) {
-                copy(0, point, status, size, matr.replace(x, y, None))
-            } else {
-                this
-            }
     }
 

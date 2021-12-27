@@ -24,28 +24,40 @@ case class GuiPieces(controller: ControllerInterface) {
     var mid = Array.tabulate[Tiles](6) { (col) => new Tiles(3, col, controller) }
     var bot = Array.tabulate[Tiles](3, 3) { (row, col) => new Tiles(row + 4, col, controller) }
 
+    val textp1 = new TextField{columns = 10}
+
+    val textp2 = new TextField{columns = 10}
 
     val player1 = new FlowPanel() {    
             contents += new Label("Spieler1: ")
-            val textp1 = new TextField{columns = 10}
             textp1.editable = false
             contents += textp1
         }
     val player2 = new FlowPanel() {    
             contents += new Label("Spieler2: ")    
-            contents += new TextField{columns = 10}     
+            textp2.editable = false 
+            contents += textp2   
         }
     val player = new FlowPanel() {
         contents += player1
         contents += player2
     }
-    val stonesleftp1 = new FlowPanel{
+
+    val p1stones = new TextField{columns = 2}
+
+    val p2stones = new TextField{columns = 2}
+
+    val stonesleftp1 = new FlowPanel {
         contents += new Label("stones left: ")
-        contents += new TextField{columns = 2}
+        p1stones.editable = false
+        p1stones.text = controller.field.player.p1stones.toString
+        contents += p1stones
     }
-    val stonesleftp2 = new FlowPanel{
+    val stonesleftp2 = new FlowPanel {
         contents += new Label("stones left: ")
-        contents += new TextField{columns = 2}
+        p2stones.editable = false
+        p2stones.text = controller.field.player.p2stones.toString
+        contents += p2stones
     }   
     val stones = new FlowPanel {
         contents += stonesleftp1
@@ -57,7 +69,6 @@ case class GuiPieces(controller: ControllerInterface) {
         contents+= new TextField(columns = 50)
         border = Swing.EmptyBorder(0, 0, 25, 0)
     }
-
     val field1 = new FlowPanel() {
         hGap = 150
         contents += top(0)(0)
@@ -70,7 +81,6 @@ case class GuiPieces(controller: ControllerInterface) {
         contents += bot(2)(1)
         contents += bot(2)(2)
     }
-    
     val field2 = new FlowPanel() {
         hGap = 100
         border = Swing.EmptyBorder(25, 0, 25, 0)
@@ -113,7 +123,6 @@ case class GuiPieces(controller: ControllerInterface) {
             contents += mid(5)
         }
     }
-
     val finalfield = new BoxPanel(Orientation.Vertical) {
         background = Color.PINK
         contents += field1

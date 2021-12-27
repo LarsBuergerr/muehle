@@ -14,7 +14,7 @@ import aview.gui.MainGui
 
     print("WELCOME TO THE MUEHLE-GAME\n\n\n");
     val matr = new MuehlMatrix[Option[Piece]](3, None)
-    val field = new Field(10, 3, matr)
+    val field = new Field(18, 3, matr)
     val controller = Controller(field)
     val tui = TUI(controller)
     val gui = MainGui(controller)

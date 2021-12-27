@@ -24,7 +24,6 @@ class Tiles(x: Int, y: Int, controller: ControllerInterface) extends BoxPanel(Or
     def undoReaction = controller.undo
     def moveReaction = controller.move(Some(controller.field.playerstatus), controller.field.getpoint().get.x, controller.field.getpoint().get.y, x, y)
     def takeReaction = controller.take(None, x, y)
-    def movetakeReaction(x: Int, y: Int) = controller.movetake(None, x, y)
     
     preferredSize = new Dimension(25, 25)
     border = LineBorder(Color.BLACK)
@@ -43,19 +42,16 @@ class Tiles(x: Int, y: Int, controller: ControllerInterface) extends BoxPanel(Or
                 
             } else {
                 if(controller.field.getpoint().equals(Some(Point(x, y)))) {
-                    //undoReaction
                     undoReaction
                 } else if (controller.field.getpoint().isDefined) {
                     var tmp = controller.field.point
                     if(controller.field.checkmove(controller.field.getpoint().get.x, controller.field.getpoint().get.y, x, y)){
                         moveReaction
                     } else {
-                        //undoReaction
                         undoReaction
                     }
                     
                 } else {
-                    //movetakeReaction(x, y)
                     selectReaction
                 }
             }

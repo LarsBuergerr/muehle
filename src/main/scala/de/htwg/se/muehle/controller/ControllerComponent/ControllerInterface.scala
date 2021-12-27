@@ -24,5 +24,3 @@ trait ControllerInterface extends Publisher:
     def take(stone: Option[Piece], x: Int, y: Int): Unit
 
     def select(x: Int, y: Int): Unit
-
-    def movetake(stone: Option[Piece], x: Int, y: Int): Unit

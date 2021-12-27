@@ -101,9 +101,9 @@ class isMill(xinput: Int, yinput: Int, stone: Option[Piece], matr: MuehlMatrix[O
             if((matr.mcell(x, y).equals(stone) &&
             matr.mcell(x, y + 1).equals(stone) &&
             matr.mcell(x ,y - 1).equals(stone)) || 
-            (matr.mcell(4, y).equals(stone) &&
-            matr.mcell(5, y).equals(stone) &&
-            matr.mcell(6, y).equals(stone))) {
+            (matr.mcell(5, y).equals(stone) &&
+            matr.mcell(6, y).equals(stone) &&
+            matr.mcell(7, y).equals(stone))) {
                 return true;
             } else {
                 return false;

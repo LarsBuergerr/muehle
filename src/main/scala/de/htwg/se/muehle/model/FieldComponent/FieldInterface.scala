@@ -4,6 +4,8 @@ package model.FieldComponent
 
 trait FieldInterface {
 
+    val player: Player
+
     val point: Option[Point]
 
     val status: Int
@@ -33,6 +35,4 @@ trait FieldInterface {
     def checkmove(x: Int, y: Int, newx: Int, newy: Int): Boolean
 
     def checktake(stone: Option[Piece], x: Int, y: Int): Boolean
-
-    def movetake(stone: Option[Piece], x: Int, y: Int): FieldInterface
 }

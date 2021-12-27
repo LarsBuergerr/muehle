@@ -52,14 +52,3 @@ case class SelectCommand(x: Int, y: Int, controller: Controller) extends Command
     override def redoStep: FieldInterface =
         newfield
 
-case class MoveTakeCommand(stone: Option[Piece], x: Int, y: Int, controller: Controller) extends Command(controller):
-    val oldfield = controller.field
-    var newfield = controller.field
-    override def execute: FieldInterface =
-        newfield = controller.field.movetake(stone, x, y)
-        newfield
-    override def undoStep: FieldInterface = 
-        oldfield
-    override def redoStep: FieldInterface = 
-        newfield
-

@@ -3,15 +3,12 @@ package de.htwg.se.muehle
 package aview
 import scala.io.StdIn.readLine
 import util.Observer
-import model.FieldComponent.{MuehlMatrix, Piece}
-import model.FieldComponent.FieldBaseImpl._
+import model.FieldComponent.{MuehlMatrix, Piece, Player}
 import scala.swing.Reactor
 import de.htwg.se.muehle.controller.ControllerComponent.ControllerInterface
 import de.htwg.se.muehle.controller.ControllerComponent.ControllerBaseImplementation._
 
 class TUI(controller: ControllerInterface) extends Reactor:
-    val p1 = Player("player1")
-    val p2 = Player("player2")
     listenTo(controller)
     def run =
         print(controller.field.mesh())
@@ -23,12 +20,11 @@ class TUI(controller: ControllerInterface) extends Reactor:
         case fieldchange =>
         print(controller.field.mesh())
     }
-
     def loop: Unit =
         if(controller.field.playerstatus.equals(Piece.player1)) then
-            p1.show
-        else if(controller.field.playerstatus.equals(Piece.player2)) 
-            p2.show
+            println("Player 1:")
+        else
+            println("Player 2")
         
         val input = readLine("> ")
         inputloop(input) match {
@@ -77,7 +73,15 @@ class TUI(controller: ControllerInterface) extends Reactor:
                     val x = chars(1).toInt - 1
                     val y = chars(2).toInt - 1
                     controller.take(None, x, y)
-                    return 1
+                    if(controller.field.player.p1stones == 0) {
+                        println("Player 2 won")
+                        return 0
+                    } else if(controller.field.player.p2stones == 0) {
+                        println("Player 1 won")
+                        return 0
+                    } else {
+                        return 1
+                    }
                 case "z" =>
                     controller.undo
                     return 1
