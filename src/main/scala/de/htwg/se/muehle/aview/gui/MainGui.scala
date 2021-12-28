@@ -6,6 +6,7 @@ package gui
 
 import controller.ControllerComponent._
 import controller.ControllerComponent.ControllerBaseImplementation._
+import model.FieldComponent.Piece
 import scala.swing._
 import de.htwg.se.muehle.util.Observer
 import java.awt.Dimension
@@ -36,6 +37,13 @@ class MainGui(controller: ControllerInterface) extends SimpleSwingApplication {
             }
             pieces.p1stones.text = controller.field.player.p1stones.toString
             pieces.p2stones.text = controller.field.player.p2stones.toString
+
+            pieces.showturn.text =
+            if(controller.field.playerstatus.equals(Piece.player1)) {
+                "Player1: " + controller.field.gamestatus.toString
+            } else {
+                "Player2: " + controller.field.gamestatus.toString
+            }
         }
         def checkwin = {
             if(controller.field.player.p1stones == 0) {

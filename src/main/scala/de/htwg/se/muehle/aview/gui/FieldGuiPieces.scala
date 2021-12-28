@@ -14,6 +14,7 @@ import javax.swing.border.LineBorder
 import de.htwg.se.muehle.controller.ControllerComponent.ControllerInterface
 import controller.ControllerComponent._
 import controller.ControllerComponent.ControllerBaseImplementation._
+import model.FieldComponent.Piece
 
 
 case class GuiPieces(controller: ControllerInterface) {
@@ -65,9 +66,19 @@ case class GuiPieces(controller: ControllerInterface) {
         border = Swing.EmptyBorder(10, 10, 50, 10)
         hGap = 150
     }
+    val showturn = new TextField(columns = 50)
+
     val turn = new FlowPanel {
-        contents+= new TextField(columns = 50)
+        contents+= showturn
+        showturn.editable = false
+        showturn.text = 
+            if(controller.field.playerstatus.equals(Piece.player1)) {
+                "Player1: " + controller.field.gamestatus.toString
+            } else {
+                "Player2: " + controller.field.gamestatus.toString
+            }
         border = Swing.EmptyBorder(0, 0, 25, 0)
+
     }
     val field1 = new FlowPanel() {
         hGap = 150
