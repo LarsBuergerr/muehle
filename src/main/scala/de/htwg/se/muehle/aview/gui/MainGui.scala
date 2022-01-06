@@ -5,7 +5,7 @@ package aview
 package gui
 
 import controller.ControllerComponent._
-import controller.ControllerComponent.ControllerBaseImplementation._
+import controller.ControllerComponent.ControllerBaseImpl._
 import model.FieldComponent.Piece
 import scala.swing._
 import de.htwg.se.muehle.util.Observer
@@ -16,6 +16,7 @@ import javax.swing.border.LineBorder
 class MainGui(controller: ControllerInterface) extends SimpleSwingApplication {
     def top = new MainFrame {
         var pieces = GuiPieces(controller)
+        pieces.finalfield.background = Color.PINK
         title = "Muehle Game"
         centerOnScreen()
         contents = pieces.finalBox
@@ -47,10 +48,10 @@ class MainGui(controller: ControllerInterface) extends SimpleSwingApplication {
         }
         def checkwin = {
             if(controller.field.player.p1stones == 0) {
-                pieces.textp1.text = "PLAYER 2 WON"
+                pieces.showturn.text = "PLAYER 2 WON"
                 quit
             } else if(controller.field.player.p2stones == 0) {
-                pieces.textp1.text = "PLAYER 1 WON"
+                pieces.showturn.text = "PLAYER 1 WON"
                 quit
             }
         }

@@ -1,6 +1,6 @@
 package de.htwg.se.muehle
 
-package controller.ControllerComponent.ControllerBaseImplementation
+package controller.ControllerComponent.ControllerBaseImpl
 
 import util.Command
 

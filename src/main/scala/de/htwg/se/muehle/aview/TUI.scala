@@ -6,7 +6,7 @@ import util.Observer
 import model.FieldComponent.{MuehlMatrix, Piece, Player}
 import scala.swing.Reactor
 import de.htwg.se.muehle.controller.ControllerComponent.ControllerInterface
-import de.htwg.se.muehle.controller.ControllerComponent.ControllerBaseImplementation._
+import de.htwg.se.muehle.controller.ControllerComponent.ControllerBaseImpl._
 
 class TUI(controller: ControllerInterface) extends Reactor:
     listenTo(controller)

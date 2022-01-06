@@ -13,7 +13,7 @@ import java.awt.{Color, Font}
 import javax.swing.border.LineBorder
 import de.htwg.se.muehle.controller.ControllerComponent.ControllerInterface
 import controller.ControllerComponent._
-import controller.ControllerComponent.ControllerBaseImplementation._
+import controller.ControllerComponent.ControllerBaseImpl._
 import model.FieldComponent.Piece
 
 
@@ -135,7 +135,6 @@ case class GuiPieces(controller: ControllerInterface) {
         }
     }
     val finalfield = new BoxPanel(Orientation.Vertical) {
-        background = Color.PINK
         contents += field1
         contents += field2
         contents += field3
@@ -155,4 +154,3 @@ case class GuiPieces(controller: ControllerInterface) {
             contents += finalfield
     }
 }
-

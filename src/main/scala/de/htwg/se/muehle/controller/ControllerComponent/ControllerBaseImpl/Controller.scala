@@ -1,10 +1,10 @@
 package de.htwg.se.muehle
 
-package controller.ControllerComponent.ControllerBaseImplementation
+package controller.ControllerComponent.ControllerBaseImpl
 
 import util.Observable
 import scala.swing.Publisher
-import de.htwg.se.muehle.model.FieldComponent.{FieldInterface, Piece}
+import model.FieldComponent.{FieldInterface, Piece}
 import de.htwg.se.muehle.controller.ControllerComponent._
 
 case class Controller(var field: FieldInterface) extends ControllerInterface:

@@ -1,12 +1,11 @@
 package de.htwg.se.muehle
-package controller
+
+package controller.ControllerComponent.ControllerBaseImpl
 
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers._
 import model.FieldComponent._
 import model.FieldComponent.FieldBaseImpl._
-import controller.ControllerComponent._
-import controller.ControllerComponent.ControllerBaseImplementation._
 
 class ControllerSpec extends AnyWordSpec {
     "A Controller" should {

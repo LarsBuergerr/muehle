@@ -1,4 +1,4 @@
-import de.htwg.se.muehle.controller.ControllerComponent.ControllerBaseImplementation._
+import de.htwg.se.muehle.controller.ControllerComponent.ControllerBaseImpl._
 import de.htwg.se.muehle.aview.gui.Tiles
 import de.htwg.se.muehle.model.FieldComponent._
 import de.htwg.se.muehle.model.FieldComponent.FieldBaseImpl._

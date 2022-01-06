@@ -1,6 +1,6 @@
 package de.htwg.se.muehle
 
-package model
+package model.FieldComponent
 
 import org.scalatest.matchers.should.Matchers._
 import org.scalatest.wordspec.AnyWordSpec
@@ -10,11 +10,12 @@ import controller.ControllerComponent._
 import controller.ControllerComponent.ControllerBaseImplementation._
 
 
-class PieceSpec extends AnyWordSpec {
-    "Piece" should {
-        "return the Letters B or W depending on choosing player1 or player2" in {
-            Piece.player1.toString should be("W")
-            Piece.player2.toString should be("B")
+class PointSpec extends AnyWordSpec {
+    "a Point" should {
+        "have a X-Cordinate and a Y-Cordinate" in {
+            val test = Point(1, 1)
+            test.x should be (1)
+            test.y should be (1)  
         }
     }
-}
+} 

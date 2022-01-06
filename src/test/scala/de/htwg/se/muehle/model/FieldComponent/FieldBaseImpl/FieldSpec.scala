@@ -1,12 +1,12 @@
 package de.htwg.se.muehle
-package model
+
+package model.FieldComponent.FieldBaseImpl
 
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers._
 import model.FieldComponent._
-import model.FieldComponent.FieldBaseImpl._
 import controller.ControllerComponent._
-import controller.ControllerComponent.ControllerBaseImplementation._
+import controller.ControllerComponent.ControllerBaseImpl._
 
 
 class FieldSpec extends AnyWordSpec {

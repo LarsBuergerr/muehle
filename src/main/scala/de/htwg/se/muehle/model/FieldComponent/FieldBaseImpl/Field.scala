@@ -11,7 +11,7 @@ import Console.{RED, RESET}
 case class Field(player: Player, mill: Int, point: Option[Point], status: Int, size: Int, matr: MuehlMatrix[Option[Piece]]) extends FieldInterface:
 
 
-    def this(status: Int, size: Int, matr: MuehlMatrix[Option[Piece]]) = this(Player(6, 6), 0 , None, status, size, matr)
+    def this(status: Int, size: Int, matr: MuehlMatrix[Option[Piece]]) = this(Player(1, 1), 0 , None, status, size, matr)
     val p1 = player.player1
     val p2 = player.player2
     val corner = "#"
