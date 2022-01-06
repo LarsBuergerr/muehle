@@ -6,7 +6,7 @@ package model.FieldComponent
 import org.scalatest.matchers.should.Matchers._
 import org.scalatest.wordspec.AnyWordSpec
 import controller.ControllerComponent._
-import controller.ControllerComponent.ControllerBaseImplementation._
+import controller.ControllerComponent.ControllerBaseImpl._
 
 class isValidMoveSpec extends AnyWordSpec {
     "isValidMove" should {
