@@ -6,9 +6,8 @@ package model.FieldComponent
 import org.scalatest.matchers.should.Matchers._
 import org.scalatest.wordspec.AnyWordSpec
 import model.FieldComponent._
-import model.FieldComponent.FieldBaseImpl._
 import controller.ControllerComponent._
-import controller.ControllerComponent.ControllerBaseImplementation._
+import controller.ControllerComponent.ControllerBaseImpl._
 
 class isMillSpec extends AnyWordSpec {
     "isMill" should {
