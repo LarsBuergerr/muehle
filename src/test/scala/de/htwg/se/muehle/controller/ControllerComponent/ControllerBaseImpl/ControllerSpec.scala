@@ -50,12 +50,17 @@ class ControllerSpec extends AnyWordSpec {
             controller.field.matr.checkcell(1, 1) shouldBe(None)
             controller.redo
             controller.field.matr.checkcell(1, 1) shouldBe(Some(Piece.player2))
+            controller.undo
+            controller.undo
+            controller.undo
+            controller.field.matr.checkcell(1, 0) shouldBe(None)
         }
         "be able to select Cells and notfiying the Observers" in {
             controller.select(0, 0)
             controller.field.point.get.x should be(0)
             controller.field.point.get.x should be(0)
+            controller.undo
+            controller.field.point shouldBe(None)
         }
-
     }
 }
