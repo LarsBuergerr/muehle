@@ -44,6 +44,10 @@ class ControllerSpec extends AnyWordSpec {
             controller2.field.matr.checkcell(0, 1) shouldBe(Some(Piece.player1))
             controller2.field.matr.checkcell(0, 2) shouldBe(Some(Piece.player1))
             controller2.field.matr.checkcell(2, 0) shouldBe(None)
+            controller2.undo
+            controller2.field.matr.checkcell(2, 0) shouldBe(Some(Piece.player2))
+            controller2.redo
+            controller2.field.matr.checkcell(2, 0) shouldBe(None)
         }
         "be able to undo and redo a move and notifiying the Observers" in {
             controller.undo
