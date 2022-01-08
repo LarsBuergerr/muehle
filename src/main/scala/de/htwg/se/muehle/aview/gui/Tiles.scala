@@ -50,7 +50,6 @@ class Tiles(x: Int, y: Int, controller: ControllerInterface) extends BoxPanel(Or
                     } else {
                         undoReaction
                     }
-                    
                 } else {
                     selectReaction
                 }

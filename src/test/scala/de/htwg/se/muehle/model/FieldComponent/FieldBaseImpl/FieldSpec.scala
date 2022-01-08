@@ -120,12 +120,10 @@ class FieldSpec extends AnyWordSpec {
             "change the Entries in the given matrix by changing '#' to either 'B' or 'W' on the given Coordinates" in {
                 val matr = new MuehlMatrix[Option[Piece]](3, None)
                 val field = new Field(18, 3, matr)
-                val updated1 = field.put(Some(Piece.player1), 0, 0)
-                val updated2 = updated1.put(Some(Piece.player2), 3, 1)
-                val updated3 = updated2.put(Some(Piece.player1), 5, 1)
-                updated3.matr.cell(0, 0) should be (Some(Piece.player1))
-                updated3.matr.mid(1) should be (Some(Piece.player2))
-                updated3.matr.cell(4, 1) should be (Some(Piece.player1))
+                val updated1 = field.put(Some(Piece.player1), 0, 0).put(Some(Piece.player2), 3, 1).put(Some(Piece.player1), 5, 1)
+                updated1.matr.cell(0, 0) should be (Some(Piece.player1))
+                updated1.matr.mid(1) should be (Some(Piece.player2))
+                updated1.matr.cell(4, 1) should be (Some(Piece.player1))
             }
         }  
     }

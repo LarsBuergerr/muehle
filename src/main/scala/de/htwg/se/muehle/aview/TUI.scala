@@ -14,8 +14,6 @@ class TUI(controller: ControllerInterface) extends Reactor:
         print(controller.field.mesh())
         loop
 
-    //def this() = this(new Controller(new Field(18, 3, new MuehlMatrix(3, None))))
-
     reactions += {
         case fieldchange =>
         print(controller.field.mesh())
@@ -67,7 +65,7 @@ class TUI(controller: ControllerInterface) extends Reactor:
                     val y = chars(2).toInt - 1
                     val newx = chars(3).toInt - 1
                     val newy = chars(4).toInt - 1
-                    controller.move(Some(controller.field.playerstatus), x, y, newx, newy)                  
+                    controller.move(Some(controller.field.playerstatus), x, y, newx, newy)
                     return 1
                 case "take" | "t" =>
                     val x = chars(1).toInt - 1
