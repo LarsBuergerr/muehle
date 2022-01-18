@@ -2,12 +2,18 @@ package de.htwg.se.muehle
 
 package controller.ControllerComponent.ControllerBaseImpl
 
+import com.google.inject.Guice
+import net.codingwell.scalaguice.ScalaModule
+import com.google.inject.AbstractModule
+import com.google.inject.name.Names
+import com.google.inject.Inject
 import util.Observable
 import scala.swing.Publisher
 import model.FieldComponent.{FieldInterface, Piece}
 import de.htwg.se.muehle.controller.ControllerComponent._
 
-case class Controller(var field: FieldInterface) extends ControllerInterface:
+case class Controller @Inject() (var field: FieldInterface) extends ControllerInterface:
+
     val invoker = new Invoker
     def put(stone: Option[Piece],x: Int, y: Int) = 
         field = invoker.doStep(PutCommand(stone, x, y, this))

@@ -1,10 +1,8 @@
 package de.htwg.se.muehle
 
-
 package aview
 
 package gui
-
 
 import scala.swing._
 import de.htwg.se.muehle.util.Observer
@@ -15,15 +13,66 @@ import de.htwg.se.muehle.controller.ControllerComponent.ControllerInterface
 import controller.ControllerComponent._
 import controller.ControllerComponent.ControllerBaseImpl._
 import model.FieldComponent.Piece
-
+import java.awt.GridLayout
+import javax.swing.BorderFactory
+import javax.swing.ImageIcon
 
 case class GuiPieces(controller: ControllerInterface) {
 
 
     def tile(x: Int, y: Int) = new Tiles(x, y, controller)
-    var top = Array.tabulate[Tiles](3, 3) { (row, col) => new Tiles(row, col, controller) }
-    var mid = Array.tabulate[Tiles](6) { (col) => new Tiles(3, col, controller) }
-    var bot = Array.tabulate[Tiles](3, 3) { (row, col) => new Tiles(row + 4, col, controller) }
+    var top = Array.ofDim[Tiles](3, 3)
+    var mid = Array.ofDim[Tiles](6)
+    var bot = Array.ofDim[Tiles](3, 3)
+    val hline = "de/htwg/se/muehle/aview/gui/hline.jpg"
+
+    def addT(gp: GridPanel, n: Int, x: Int, y: Int, s: String) = {
+        for(i <- 0 until n) {
+            s match {
+                case "t" => top(x)(y) = new Tiles(x, y, controller)
+                            gp.contents += top(x)(y)
+                case "m" => mid(y) = new Tiles(3, y, controller)
+                            gp.contents += mid(y)
+                case "b" => bot(x)(y) = new Tiles(x + 4, y, controller)
+                            gp.contents += bot(x)(y)
+            }
+        }
+    }
+
+    def addH(gp: GridPanel, n: Int) = {
+        def hspace = new Label{
+            icon = ImageIcon("src/main/scala/de/htwg/se/muehle/aview/gui/hline.png")
+            preferredSize = new Dimension(25, 25)
+            minimumSize = new Dimension(25 ,25)
+            maximumSize = new Dimension(60, 60)
+        }
+        for(i <- 0 until n) {
+            gp.contents += hspace
+        }
+    }
+
+    def addV(gp: GridPanel, n: Int) = {
+        def vspace = new Label{
+            icon = ImageIcon("src/main/scala/de/htwg/se/muehle/aview/gui/vline.png")
+            preferredSize = new Dimension(25, 25)
+            minimumSize = new Dimension(25 ,25)
+            maximumSize = new Dimension(60, 60)
+        }
+        for(i <- 0 until n) {
+            gp.contents += vspace
+        }
+    }
+
+        def addb(gp: GridPanel, n: Int) = {
+        def bspace = new Label{
+            preferredSize = new Dimension(25, 25)
+            minimumSize = new Dimension(25 ,25)
+            maximumSize = new Dimension(60, 60)
+        }
+        for(i <- 0 until n) {
+            gp.contents += bspace
+        }
+    }
 
     val textp1 = new TextField{columns = 10}
 
@@ -80,77 +129,32 @@ case class GuiPieces(controller: ControllerInterface) {
         border = Swing.EmptyBorder(0, 0, 25, 0)
 
     }
-    val field1 = new FlowPanel() {
-        hGap = 150
-        contents += top(0)(0)
-        contents += top(0)(1)
-        contents += top(0)(2)
-    }
-    val field11= new FlowPanel() {
-        hGap = 150
-        contents += bot(2)(0)
-        contents += bot(2)(1)
-        contents += bot(2)(2)
-    }
-    val field2 = new FlowPanel() {
-        hGap = 100
-        border = Swing.EmptyBorder(25, 0, 25, 0)
-        contents += top(1)(0)
-        contents += top(1)(1)
-        contents += top(1)(2)
-    }
-    val field22 = new FlowPanel() {
-        hGap = 100
-        border = Swing.EmptyBorder(25, 0, 25, 0)
-        contents += bot(1)(0)
-        contents += bot(1)(1)
-        contents += bot(1)(2)
-    }
-    val field3 = new FlowPanel {
-        hGap = 50
-        contents += top(2)(0)
-        contents += top(2)(1)
-        contents += top(2)(2)
-    }
-    val field33 = new FlowPanel {
-        hGap = 50
-        contents += bot(0)(0)
-        contents += bot(0)(1)
-        contents += bot(0)(2)
-    }
-    val fieldmid = new FlowPanel {
-        hGap = 75
-        border = Swing.EmptyBorder(25, 0, 25, 0)
-        contents += new FlowPanel {
-            hGap = 25
-            contents += mid(0)
-            contents += mid(1)
-            contents += mid(2)
-        }
-        contents += new FlowPanel {
-            hGap = 25
-            contents += mid(3)
-            contents += mid(4)
-            contents += mid(5)
-        }
-    }
-    val finalfield = new BoxPanel(Orientation.Vertical) {
-        contents += field1
-        contents += field2
-        contents += field3
-        contents += fieldmid
-        contents += field33
-        contents += field22
-        contents += field11
+    val mesh = new GridPanel(13, 13)
+        addT(mesh, 1, 0, 0, "t");addH(mesh, 5);addT(mesh, 1, 0, 1, "t");addH(mesh, 5);addT(mesh, 1, 0, 2, "t")
+        addV(mesh, 1);addb(mesh, 5);addV(mesh, 1);addb(mesh, 5);addV(mesh, 1)
+        addV(mesh, 1);addb(mesh, 1);addT(mesh, 1, 1, 0, "t");addH(mesh, 3);addT(mesh, 1, 1, 1, "t");addH(mesh, 3);addT(mesh, 1, 1, 2, "t");addb(mesh, 1);addV(mesh, 1)
+        addV(mesh, 1);addb(mesh, 1);addV(mesh, 1);addb(mesh, 3);addV(mesh, 1);addb(mesh, 3);addV(mesh, 1);addb(mesh, 1);addV(mesh, 1)
+        addV(mesh, 1);addb(mesh, 1);addV(mesh, 1);addb(mesh, 1);addT(mesh, 1, 2, 0, "t");addH(mesh, 1);addT(mesh, 1, 2, 1, "t");addH(mesh, 1);addT(mesh, 1, 2, 2, "t");addb(mesh, 1);addV(mesh, 1);addb(mesh, 1);addV(mesh, 1)
+        addV(mesh, 1);addb(mesh, 1);addV(mesh, 1);addb(mesh, 1);addV(mesh, 1);addb(mesh, 3);addV(mesh, 1);addb(mesh, 1);addV(mesh, 1);addb(mesh, 1);addV(mesh, 1)
+        addT(mesh, 1, 3, 0, "m");addH(mesh, 1);addT(mesh, 1, 3, 1, "m");addH(mesh, 1);addT(mesh, 1, 3, 2, "m");addb(mesh, 3);addT(mesh, 1, 3, 3, "m");addH(mesh, 1);addT(mesh, 1, 3, 4, "m");addH(mesh, 1);addT(mesh, 1, 3, 5, "m")
+        addV(mesh, 1);addb(mesh, 1);addV(mesh, 1);addb(mesh, 1);addV(mesh, 1);addb(mesh, 3);addV(mesh, 1);addb(mesh, 1);addV(mesh, 1);addb(mesh, 1);addV(mesh, 1)
+        addV(mesh, 1);addb(mesh, 1);addV(mesh, 1);addb(mesh, 1);addT(mesh, 1, 0, 0, "b");addH(mesh, 1);addT(mesh, 1, 0, 1, "b");addH(mesh, 1);addT(mesh, 1, 0, 2, "b");addb(mesh, 1);addV(mesh, 1);addb(mesh, 1);addV(mesh, 1)
+        addV(mesh, 1);addb(mesh, 1);addV(mesh, 1);addb(mesh, 3);addV(mesh, 1);addb(mesh, 3);addV(mesh, 1);addb(mesh, 1);addV(mesh, 1)
+        addV(mesh, 1);addb(mesh, 1);addT(mesh, 1, 1, 0, "b");addH(mesh, 3);addT(mesh, 1, 1, 1, "b");addH(mesh, 3);addT(mesh, 1, 1, 2, "b");addb(mesh, 1);addV(mesh, 1)
+        addV(mesh, 1);addb(mesh, 5);addV(mesh, 1);addb(mesh, 5);addV(mesh, 1)
+        addT(mesh, 1, 2, 0, "b");addH(mesh, 5);addT(mesh, 1, 2, 1, "b");addH(mesh, 5);addT(mesh, 1, 2, 2, "b")
 
-        visible = true
-
+    val boardpanel = new BorderPanel {
+        border = BorderFactory.createEmptyBorder(0, 175, 0, 175)
+        add(mesh, BorderPanel.Position.Center)
     }
+
     val finalBox = new BoxPanel(Orientation.Vertical) {
 
         contents += player
-            contents += stones
-            contents += turn
-            contents += finalfield
+        contents += stones
+        contents += turn
+        contents += boardpanel
+        contents += new FlowPanel() {preferredSize = new Dimension(20, 20)}
     }
 }

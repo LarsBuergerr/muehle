@@ -25,6 +25,8 @@ class Tiles(x: Int, y: Int, controller: ControllerInterface) extends BoxPanel(Or
     def moveReaction = controller.move(Some(controller.field.playerstatus), controller.field.getpoint().get.x, controller.field.getpoint().get.y, x, y)
     def takeReaction = controller.take(None, x, y)
     
+    minimumSize = new Dimension(25, 25)
+    maximumSize = new Dimension(25, 25)
     preferredSize = new Dimension(25, 25)
     border = LineBorder(Color.BLACK)
     listenTo(mouse.clicks)

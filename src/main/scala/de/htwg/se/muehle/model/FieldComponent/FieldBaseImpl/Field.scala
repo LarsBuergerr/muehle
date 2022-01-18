@@ -2,16 +2,17 @@ package de.htwg.se.muehle
 
 package model.FieldComponent.FieldBaseImpl
 
+import com.google.inject.Inject
 import de.htwg.se.muehle.model.FieldComponent._
 import scala.util.Success
 import scala.util.Try
 import scala.util.Failure
 import Console.{RED, RESET}
 
-case class Field(player: Player, mill: Int, point: Option[Point], status: Int, size: Int, matr: MuehlMatrix[Option[Piece]]) extends FieldInterface:
+case class Field @Inject() (player: Player, mill: Int, point: Option[Point], status: Int = 18, size: Int, matr: MuehlMatrix[Option[Piece]]) extends FieldInterface:
 
 
-    def this(status: Int, size: Int, matr: MuehlMatrix[Option[Piece]]) = this(Player(1, 1), 0 , None, status, size, matr)
+    def this() = this(Player(9, 9), 0 , None, 18, 3, new MuehlMatrix[Option[Piece]](3, None))
     val p1 = player.player1
     val p2 = player.player2
     val corner = "#"

@@ -9,7 +9,7 @@ import model.FieldComponent.FieldBaseImpl._
 
 class ControllerSpec extends AnyWordSpec {
     var matr = new MuehlMatrix[Option[Piece]](3, None)
-    var field = new Field(2, 3, matr)
+    var field = new Field()
     var controller = new Controller(field)
     "A Controller" should {
         "contain the Field that was handed over while creating the controller" in {
@@ -32,7 +32,7 @@ class ControllerSpec extends AnyWordSpec {
         }
         "be able to take Pieces on the Field and notifiying the Observers" in {
             var matr2 = new MuehlMatrix[Option[Piece]](3, None)
-            var field2 = new Field(6, 3, matr2)
+            var field2 = new Field()
             var controller2 = new Controller(field2)
             controller2.put(Some(Piece.player1), 0, 0)
             controller2.put(Some(Piece.player2), 2, 0)

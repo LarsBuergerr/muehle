@@ -16,10 +16,9 @@ import javax.swing.border.LineBorder
 class MainGui(controller: ControllerInterface) extends SimpleSwingApplication {
     def top = new MainFrame {
         var pieces = GuiPieces(controller)
-        pieces.finalfield.background = Color.PINK
-        title = "Muehle Game"
+        title = "Mill Game"
         centerOnScreen()
-        contents = pieces.finalBox
+        contents = new BorderPanel{add(pieces.finalBox, BorderPanel.Position.Center)}
         listenTo(controller)
 
         reactions += {
@@ -49,10 +48,8 @@ class MainGui(controller: ControllerInterface) extends SimpleSwingApplication {
         def checkwin = {
             if(controller.field.player.p1stones == 0) {
                 pieces.showturn.text = "PLAYER 2 WON"
-                quit
             } else if(controller.field.player.p2stones == 0) {
                 pieces.showturn.text = "PLAYER 1 WON"
-                quit
             }
         }
         visible = true
